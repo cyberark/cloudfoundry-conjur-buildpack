@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 SRCDIR=$(cd "$(dirname $0)/."  && pwd)
-TGTDIR=$(cd "$(dirname $0)/." && pwd)
+TGTDIR=$SRCDIR
 NAME=$(basename "$SRCDIR" | sed s/-/_/g)
 ZIPFILE="$TGTDIR/$NAME.zip"
 
@@ -11,6 +11,3 @@ echo "Target file: $ZIPFILE"
 
 rm -f "$ZIPFILE"
 zip -r "$ZIPFILE" "$SRCDIR"/bin "$SRCDIR"/lib
-
-cf delete-buildpack -f "$NAME"
-cf create-buildpack "$NAME" "$ZIPFILE" $(($(cf buildpacks | grep meta_buildpack | awk '{ print $2 }') + 1)) --enable

@@ -1,11 +1,5 @@
 version: '2'
 services:
-  builder:
+  tester:
     build: .
-    image: buildpack-builder
-#    entrypoint: /usr/local/go/bin/go
-#    command: build -v
-    volumes:
-      - ..:/conjurinc/cloudfoundry-conjur-buildpack
-    environment:
-      GOOS:
+    image: buildpack-tester

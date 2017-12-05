@@ -2,10 +2,9 @@ Given(/^the "([^"]*)" script is run$/) do |script|
   @commands ||= []
   output = `
 #{ @commands.join("\n") }
-../bin/#{script} #{@BUILD_DIR}
+/buildpack-build/bin/#{script} #{@BUILD_DIR}
   `
   @result = $?
-  puts output
 end
 
 Then(/^the result should have a non\-zero exit status$/) do
@@ -46,15 +45,13 @@ And(/^the build directory has a secrets\.yml file$/) do
 end
 
 Then(/^summon is installed$/) do
-  puts `ls -la #{@BUILD_DIR}/summon-conjur`
   `#{@BUILD_DIR}/summon -v`
   expect($?.exitstatus).to eq (0)
 end
 
 Then(/^summon-conjur is installed$/) do
-  expect(File.exist?("#{@BUILD_DIR}/summon-conjur")).to be_truthy
-  `#{@BUILD_DIR}/summon-conjur`
-  # expect($?.exitstatus).to eq (0)
+  `#{@BUILD_DIR}/summon-conjur -v`
+  expect($?.exitstatus).to eq (0)
 end
 
 Then(/^the retrieve secrets \.profile\.d script is installed$/) do
