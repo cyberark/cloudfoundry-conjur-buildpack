@@ -12,5 +12,5 @@ Before('@BUILD_DIR') do
 end
 
 After('@BUILD_DIR') do
-  FileUtils.remove_entry_secure @BUILD_DIR
+  # FileUtils.remove_entry_secure @BUILD_DIR
 end

@@ -1,11 +1,18 @@
 #!/bin/bash -e
 
-docker-compose -f ci/docker-compose.yml build
+function finish {
+  echo 'Removing environment'
+  echo '-----'
+  docker-compose down -v
+}
+trap finish EXIT
 
-docker-compose -f ci/docker-compose.yml run --rm -v $(pwd):/conjurinc/cloudfoundry-conjur-buildpack tester bash <<'EOF'
+. ./setup-conjur.sh
+
+docker-compose run --rm -v $(pwd):/conjurinc/cloudfoundry-conjur-buildpack tester bash <<'EOF'
 UNZIP_DIR="/tmp/unzipped-buildpack-build"
 BUILDPACK_DIR="$(pwd)/buildpack-build"
-SRC_DIR=$(cd "$(dirname $0)/."  && pwd)
+SRC_DIR=$(cd "$(dirname $0)/." && pwd)
 NAME=$(basename "$SRC_DIR")
 ESCAPED_NAME=$(echo $NAME | sed s/-/_/g)
 
@@ -18,4 +25,9 @@ BUILT_PACKAGE=$(find $UNZIP_DIR -type d -name $NAME)
 [ ! -z $BUILT_PACKAGE ] && mv $BUILT_PACKAGE/* $BUILDPACK_DIR
 EOF
 
-docker-compose -f ci/docker-compose.yml run --rm -w /ci -v $(pwd)/ci:/ci -v $(pwd)/buildpack-build:/buildpack-build tester cucumber --format pretty --format junit --out /ci/features/reports
+docker-compose run --rm \
+ -e CONJUR_CREDENTIALS_JSON="$CONJUR_CREDENTIALS_JSON" \
+ -w /ci \
+ -v $(pwd)/ci:/ci \
+ -v $(pwd)/buildpack-build:/buildpack-build \
+ tester cucumber --format pretty --format junit --out /ci/features/reports
