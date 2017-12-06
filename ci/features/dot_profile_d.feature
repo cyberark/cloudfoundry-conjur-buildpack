@@ -1,4 +1,4 @@
-Feature: .profile.d script
+Feature: ".profile.d" script
   Script to populate the environment variables with secrets from Conjur
 
   @BUILD_DIR
