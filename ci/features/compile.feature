@@ -2,7 +2,7 @@ Feature: Compile script
   Compile script installs summon, summon-conjur and .profile.d script
 
   @BUILD_DIR
-  Scenario: Compile script successfully installs summon, summon-conjur and .profile.d scripts
+  Scenario: Successfully installs summon, summon-conjur and .profile.d scripts
     When the "compile" script is run
     Then the result should have a 0 exit status
     And summon is installed
