@@ -1,13 +1,13 @@
 #!/bin/bash -e
 
-SRCDIR=$(cd "$(dirname $0)/."  && pwd)
-TGTDIR=$SRCDIR
-NAME=$(basename "$SRCDIR" | sed s/-/_/g)
-ZIPFILE="$TGTDIR/$NAME.zip"
+SRC_DIR=$(cd "$(dirname $0)/."  && pwd)
+TGT_DIR=$SRC_DIR
+NAME=$(basename "$SRC_DIR" | sed s/-/_/g)
+ZIP_FILE="$TGT_DIR/$NAME.zip"
 
 echo "Buildpack name: $NAME"
-echo "Source directory: $SRCDIR"
-echo "Target file: $ZIPFILE"
+echo "Source directory: $SRC_DIR"
+echo "Target file: $ZIP_FILE"
 
-rm -f "$ZIPFILE"
-zip -r "$ZIPFILE" "$SRCDIR"/bin "$SRCDIR"/lib
+rm -f "$ZIP_FILE"
+zip -r "$ZIP_FILE" "$SRC_DIR"/bin "$SRC_DIR"/lib
