@@ -1,5 +1,3 @@
-# cloudfoundry-conjur-buildpack
-
 The CyberArk Conjur Buildpack is a [decorator buildpack](https://github.com/cf-platform-eng/meta-buildpack#what-is-a-decorator) that provides convenient and secure access to secrets stored in Conjur.
 
 The buildpack carries out the following:
@@ -59,7 +57,27 @@ cd cloudfoundry-conjur-buildpack
 
 #### Create a `secrets.yml` file
 
+`secrets.yml` defines a format for mapping an environment variable to a location where a secret is stored. There are no sensitive values in this file itself. It can safely be checked into source control. 
+
 To use the Conjur Buildpack with a CF-deployed application, a `secrets.yml` file is required. The `secrets.yml` file gives a mapping of **environment variable name** to a **location where a secret is stored in Conjur**. For more information about creating this file, [see the Summon documentation](https://cyberark.github.io/summon/#secrets.yml).
+
+The following is an example of a `secrets.yml` file
+
+```
+AWS_ACCESS_KEY_ID: !var aws/$environment/iam/user/robot/access_key_id
+AWS_SECRET_ACCESS_KEY: !var aws/$environment/iam/user/robot/secret_access_key
+AWS_REGION: us-east-1
+SSL_CERT: !var:file ssl/certs/private
+```
+
+The above example could resolve to the following environment variables:
+
+```
+AWS_ACCESS_KEY_ID: AKIAI44QH8DHBEXAMPLE
+AWS_SECRET_ACCESS_KEY: je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY
+AWS_REGION: us-east-1
+SSL_CERT: /tmp/ssl-cert.pem
+```
 
 #### Push with `meta-buildpack`
 
