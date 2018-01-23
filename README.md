@@ -1,41 +1,101 @@
 # cloudfoundry-conjur-buildpack
 
-## How it works ?
+The CyberArk Conjur Buildpack is a [decorator buildpack](https://github.com/cf-platform-eng/meta-buildpack#what-is-a-decorator) that provides convenient and secure access to secrets stored in Conjur.
 
-Make sure PCF is running and has the meta-buildpack installed `https://github.com/cf-platform-eng/meta-buildpack`:
+The buildpack carries out the following:
+ 
++ Examines your app to determine the secrets to fetch using a [`secrets.yml`](https://cyberark.github.io/summon/#secrets.yml) file in the app root folder.
++ Utilizes credentials stored in [`VCAP_SERVICES`](https://docs.run.pivotal.io/devguide/deploy-apps/environment-variable.html#VCAP-SERVICES) to communicate with the bound `cyberark-conjur` service.
++ The buildpack will authenticate using the aforementioned credentials, fetch the relevant secrets and inject them into the session environment variables at the start of the app. This means the secrets are only available to the app process.
 
-For easy testing without a Conjur instance running. Uncomment the `VCAP_SERVICES` in `./lib/0000_retrieve-secrets.sh` and `./bin/decorate`
+Internally, the Conjur Buildpack uses [Summon](https://cyberark.github.io/summon/) to load secrets into the environment of CF-deployed applications based on the app's `secrets.yml` file.
 
-Upload `cloudfoundry-conjur-buildpack`
+## Limitations of meta-buildpack
 
+`meta-buildpack` makes it possible to "decorate" the application with the ability to retrieve secrets on startup. Please read [meta-buildpack documentation](https://github.com/cf-platform-eng/meta-buildpack#how-it-works) for a quick run through of how `meta-buildpack` works. 
+
+`meta-buildpack` relies on automatic detection of the language buildpack. The first language buildpack in buildpack index order to detect and claim the build will be used to build the droplet and run the application. With this in mind, **it is not currently possible to specify custom buildpacks in the manifest or as an argument to `cf push`**. In these instances meta-buildpack will not be invoked, consequently Conjur buildpack will also not be invoked.
+
+## Requirements
+
++ The Conjur Buildpack **requires** the `meta-buildpack` to work.
+
++ Ensure that your app is bound to a Conjur service instance. For more information on binding your application to a Conjur service instance, see the [Conjur Service Broker documentation](https://github.com/conjurinc/conjur-service-broker#binding-your-application-to-the-conjur-service)**
+
+## How does it work ?
+
+The buildpack is composed of 3 lifecycle scripts expected by a decorator buildpack. 
+
++ Detect script always returns a non-zero exit status.
++ Compile script installs summon, summon-conjur in the app's root directory and a `.profile.d` script at `./.profile.d/0000_retrieve-secrets.sh` relative to the app's root directory.
++ Decorate script returns a 0 when `secrets.yml` exists in the root folder of your app and the "cyberark-conjur" key is present in `VCAP_SERVICES`, otherwise non-zero exit status
+
+The `.profile.d` script is responsible for retrieving secrets and injecting them into the session environment variables at the start of the app.
+
+The buildpack has a cucumber test suite. This validates the functionality and also offers great insight into the intended functionality of the buildpack. Please see `ci/features`.
+
+## Getting Started
+
+### Installing the Conjur Buildpack
+
+**Before you begin, ensure you are logged into your CF deployment via the CF CLI.**
+
+Install the [meta-buildpack](https://github.com/cf-platform-eng/meta-buildpack):
 ```
+git clone git@github.com:cf-platform-eng/meta-buildpack
+cd meta-buildpack
+./build
 ./upload
 ```
 
-Run the test application
-
+Install the [Conjur buildpack](https://github.com/conjurinc/cloudfoundry-conjur-buildpack):
 ```
-cd test_app
-cf push test_app
-```
-
-Get the test app route at
-
-```
-cf app test_app | grep routes | awk '{ print $2 }'
+git clone git@github.com:conjurinc/cloudfoundry-conjur-buildpack
+cd cloudfoundry-conjur-buildpack
+./upload.sh
 ```
 
-Visit the test app URL and observe that environment variables have been filled in.
+### Buildpack Usage
 
----
+#### Create a `secrets.yml` File
 
-SSH into the test app
+To use the Conjur Buildpack with a CF-deployed application, a `secrets.yml` file is required. The `secrets.yml` file gives a mapping of **environment variable name** to a **location where a secret is stored in Conjur**. For more information about creating this file, [see the Summon documentation](https://cyberark.github.io/summon/#secrets.yml).
 
-```
-cf ssh test_app
-```
+#### Push with meta-buildpack
 
-Then run `env` and observe that there are no environment variables leaked from the application.
+It is clear then from the [meta-buildpack documentation](https://github.com/cf-platform-eng/meta-buildpack#how-it-works) that the Conjur decorate buildpack will **ONLY** be invoked in the following scenarios:
+
++ `cf push` with `meta-buildpack` installed and at the top of list of buildpacks. 
++ `cf push` with the `meta-buildpack` specified in app's manifest.
++ `cf push -b meta-buildpack`
+
+Assuming the app is bound to a Conjur service instance, pushing the app should result in the Conjur buildpack being invoked, as well as the language buildpack. Secrets should be available as per the `secrets.yml` file in the session environment variables at the start of the app.
+
+## Development
+
+Before getting started, you should install some developer tools. These are not required to deploy the Conjur Service Broker but they will let you develop using a standardized,
+expertly configured environment.
+
+1. [git][get-git] to manage source code
+2. [Docker][get-docker] to manage dependencies and runtime environments
+3. [Docker Compose][get-docker-compose] to orchestrate Docker environments
+
+[get-docker]: https://docs.docker.com/engine/installation
+[get-git]: https://git-scm.com/downloads
+[get-docker-compose]: https://docs.docker.com/compose/install
+
+To test the usage of the Conjur Service Broker within a CF deployment, you can
+follow the demo scripts in the [Cloud Foundry demo repo](https://github.com/conjurinc/cloudfoundry-conjur-demo).
+
+To run the test suite, call `./test.sh` from your local machine - the script will stand up the needed containers and run the full suite of rspec and cucumber tests.
+
+### Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
 ## License
 
