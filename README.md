@@ -57,11 +57,11 @@ cd cloudfoundry-conjur-buildpack
 
 ### Buildpack Usage
 
-#### Create a `secrets.yml` File
+#### Create a `secrets.yml` file
 
 To use the Conjur Buildpack with a CF-deployed application, a `secrets.yml` file is required. The `secrets.yml` file gives a mapping of **environment variable name** to a **location where a secret is stored in Conjur**. For more information about creating this file, [see the Summon documentation](https://cyberark.github.io/summon/#secrets.yml).
 
-#### Push with meta-buildpack
+#### Push with `meta-buildpack`
 
 It is clear then from the [meta-buildpack documentation](https://github.com/cf-platform-eng/meta-buildpack#how-it-works) that the Conjur decorate buildpack will **ONLY** be invoked in the following scenarios:
 
