@@ -30,7 +30,7 @@ The buildpack is composed of 3 lifecycle scripts expected by a decorator buildpa
 
 The `.profile.d` script is responsible for retrieving secrets and injecting them into the session environment variables at the start of the app.
 
-The buildpack has a cucumber test suite. This validates the functionality and also offers great insight into the intended functionality of the buildpack. Please see `ci/features`.
+The buildpack has a cucumber test suite. This validates the functionality and also offers great insight into the intended functionality of the buildpack. Please see `./ci/features`.
 
 ## Getting Started
 
