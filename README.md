@@ -8,17 +8,17 @@ The buildpack carries out the following:
 
 Internally, the Conjur Buildpack uses [Summon](https://cyberark.github.io/summon/) to load secrets into the environment of CF-deployed applications based on the app's `secrets.yml` file.
 
-## Limitations of meta-buildpack
-
-`meta-buildpack` makes it possible to "decorate" the application with the ability to retrieve secrets on startup. Please read [meta-buildpack documentation](https://github.com/cf-platform-eng/meta-buildpack#how-it-works) for a quick run through of how `meta-buildpack` works. 
-
-`meta-buildpack` relies on automatic detection of the language buildpack. The first language buildpack in buildpack index order to detect and claim the build will be used to build the droplet and run the application. With this in mind, **it is not currently possible to specify custom buildpacks in the manifest or as an argument to `cf push`**. In these instances meta-buildpack will not be invoked, consequently Conjur buildpack will also not be invoked.
-
 ## Requirements
 
 + The Conjur Buildpack **requires** the `meta-buildpack` to work.
 
 + Ensure that your app is bound to a Conjur service instance. For more information on binding your application to a Conjur service instance, see the [Conjur Service Broker documentation](https://github.com/conjurinc/conjur-service-broker#binding-your-application-to-the-conjur-service)**
+
+## Limitations of meta-buildpack
+
+`meta-buildpack` makes it possible to "decorate" the application with the ability to retrieve secrets on startup. Please read [meta-buildpack documentation](https://github.com/cf-platform-eng/meta-buildpack#how-it-works) for a quick run through of how `meta-buildpack` works. 
+
+`meta-buildpack` relies on automatic detection of the language buildpack. The first language buildpack in buildpack index order to detect and claim the build will be used to build the droplet and run the application. With this in mind, **it is not currently possible to specify custom buildpacks in the manifest or as an argument to `cf push`**. In these instances meta-buildpack will not be invoked, consequently Conjur buildpack will also not be invoked.
 
 ## How does it work ?
 
