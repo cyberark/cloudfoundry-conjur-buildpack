@@ -85,7 +85,7 @@ As described in the [`meta-buildpack` documentation](https://github.com/cf-platf
 + `cf push` with the `meta-buildpack` specified in app's manifest.
 + `cf push -b meta-buildpack`
 
-Assuming the app is bound to a Conjur service instance, pushing the app should result in the Conjur buildpack being invoked, as well as the language buildpack. The secrets specified in the `secrets.yml` file should now be available in the session environment variables at the start of the app.
+Assuming the app is bound to a Conjur service instance, pushing the app will result in the Conjur buildpack being invoked, as well as the language buildpack. The secrets specified in the `secrets.yml` file will then be available in the session environment variables at the start of the app.
 
 ## Development
 
