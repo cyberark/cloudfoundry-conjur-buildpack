@@ -1,5 +1,5 @@
 Then(/^conjur-env is installed$/) do
-  `ls #{@BIN_DIR}/conjur-env`
+  `ls #{@VENDOR_DIR}/conjur-env`
   expect($?.exitstatus).to eq (0)
 end
 

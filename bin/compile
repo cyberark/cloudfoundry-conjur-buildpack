@@ -6,7 +6,7 @@ BIN_DIR=$(cd $(dirname $0); pwd)
 BUILDPACK_DIR=$(dirname $BIN_DIR)
 
 pushd ${BUILD_DIR}
-  mkdir -p .profile.d bin
-  cp ${BUILDPACK_DIR}/vendor/conjur-env ./bin/conjur-env
+  mkdir -p .profile.d vendor
+  cp ${BUILDPACK_DIR}/vendor/conjur-env ./vendor/conjur-env
   cp ${BUILDPACK_DIR}/lib/0001_retrieve-secrets.sh ./.profile.d/0001_retrieve-secrets.sh
 popd

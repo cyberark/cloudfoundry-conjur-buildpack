@@ -26,7 +26,7 @@ trap 'err_report $LINENO' ERR
 
 # inject secrets into environment
 pushd $1
-  eval "$(./bin/conjur-env)"
+  eval "$(./vendor/conjur-env)"
 popd
 
 trap - ERR
