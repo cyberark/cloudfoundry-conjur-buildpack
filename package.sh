@@ -4,6 +4,7 @@ cd $(dirname $0)
 
 . ./docker_vars.sh
 
+rm -rf vendor/conjur-env
 # http://blog.wrouesnel.com/articles/Totally%20static%20Go%20builds/
 docker run --rm \
  -v "$PWD/vendor":/vendor \

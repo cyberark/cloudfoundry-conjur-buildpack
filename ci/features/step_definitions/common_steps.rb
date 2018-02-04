@@ -26,12 +26,10 @@ Given(/^the '([^"]*)' script is run$/) do |script|
   step "the '#{ENV['BUILDPACK_BUILD_DIR']}/bin/#{script} #{@BUILD_DIR}' command is run"
 end
 
-Given(/^the \.profile\.d scripts are copied into the lib directory of the app's root folder$/) do
+Given(/^the compile script is run the app's root folder$/) do
   step "the following command is run:", <<EOS
-cd #{@BUILD_DIR}
-mkdir -p .profile.d bin
-cp #{ENV['BUILDPACK_BUILD_DIR']}/vendor/conjur-env ./bin/conjur-env
-cp #{ENV['BUILDPACK_BUILD_DIR']}/lib/0001_retrieve-secrets.sh ./.profile.d/0001_retrieve-secrets.sh
+set +x
+#{ENV['BUILDPACK_BUILD_DIR']}/bin/compile #{@BUILD_DIR}
 EOS
 end
 

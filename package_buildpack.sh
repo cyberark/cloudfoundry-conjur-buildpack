@@ -14,5 +14,4 @@ pushd ${SRC_DIR}
   }
   rm -f "$ZIP_FILE"
   zip -r "$ZIP_FILE" bin lib vendor
-  rm -rf vendor
 popd
