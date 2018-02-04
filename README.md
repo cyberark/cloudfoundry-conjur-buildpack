@@ -95,7 +95,8 @@ Assuming the app is bound to a Conjur service instance, pushing the app will res
 
 To retrieve secrets without using `meta-buildpack` you can simply:
 
-+ copy the contents of the `./lib` directory in this repository to the `./.profile.d` directory relative to your app's root directory.
++ copy the contents of the `./lib` directory in a release to the `./.profile.d` directory relative to your app's root directory.
++ copy the contents of the `./vendor` directory in a release to the `./vendor` directory relative to your app's root directory.
  
 When your application starts the secrets specified in the `secrets.yml` file will now be available in the session environment variables at the start of the app.
 
