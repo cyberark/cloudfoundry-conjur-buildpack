@@ -3,4 +3,4 @@ ci/features/reports/
 buildpack-build/
 .DS_Store
 .idea/
-deps
+vendor

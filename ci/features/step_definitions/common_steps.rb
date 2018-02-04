@@ -30,7 +30,7 @@ Given(/^the \.profile\.d scripts are copied into the lib directory of the app's 
   step "the following command is run:", <<EOS
 cd #{@BUILD_DIR}
 mkdir -p .profile.d bin
-cp #{ENV['BUILDPACK_BUILD_DIR']}/deps/conjur-env ./bin/conjur-env
+cp #{ENV['BUILDPACK_BUILD_DIR']}/vendor/conjur-env ./bin/conjur-env
 cp #{ENV['BUILDPACK_BUILD_DIR']}/lib/0001_retrieve-secrets.sh ./.profile.d/0001_retrieve-secrets.sh
 EOS
 end
