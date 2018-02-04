@@ -4,3 +4,4 @@ buildpack-build/
 .DS_Store
 .idea/
 vendor
+cloudfoundry_conjur_buildpack/

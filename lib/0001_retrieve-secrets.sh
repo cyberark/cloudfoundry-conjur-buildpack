@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "cyberark-conjur-buildpack: retrieving & injecting secrets"
+echo "[cyberark-conjur-buildpack]: retrieving & injecting secrets"
 
 err_report() {
   local previous_exit=$?

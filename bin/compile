@@ -1,6 +1,8 @@
 #!/bin/bash -e
 # bin/compile <build-dir>
 
+echo "[cyberark-conjur-buildpack]: compiling"
+
 BUILD_DIR=$1
 BIN_DIR=$(cd $(dirname $0); pwd)
 BUILDPACK_DIR=$(dirname $BIN_DIR)
