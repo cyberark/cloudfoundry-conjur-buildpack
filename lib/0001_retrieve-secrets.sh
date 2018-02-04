@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set +x
 
 echo "cyberark-conjur-buildpack: retrieving & injecting secrets"
 
@@ -24,9 +23,17 @@ trap 'err_report $LINENO' ERR
 #}
 #'
 
+# making sure that no tracing takes place, we're dealing with secrets here :)
+declare xtrace=""
+case $- in
+  (*x*) xtrace="xtrace";;
+esac
+set +x
+
 # inject secrets into environment
 pushd $1
   eval "$(./vendor/conjur-env)"
 popd
 
+[ ! -z "$xtrace" ] && set -x
 trap - ERR
