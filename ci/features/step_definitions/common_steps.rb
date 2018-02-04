@@ -29,12 +29,11 @@ end
 Given(/^the \.profile\.d scripts are copied into the lib directory of the app's root folder$/) do
   step "the following command is run:", <<EOS
 cd #{@BUILD_DIR}
-mkdir -p .profile.d
-cp #{ENV['BUILDPACK_BUILD_DIR']}/lib/0000_install-summon.sh ./.profile.d/0000_install-summon.sh
+mkdir -p .profile.d bin
+cp #{ENV['BUILDPACK_BUILD_DIR']}/deps/conjur-env ./bin/conjur-env
 cp #{ENV['BUILDPACK_BUILD_DIR']}/lib/0001_retrieve-secrets.sh ./.profile.d/0001_retrieve-secrets.sh
 EOS
 end
-
 
 Given(/^the following command is run:$/) do |multiline_text|
   step "the '#{multiline_text}' command is run"

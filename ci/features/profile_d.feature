@@ -4,6 +4,7 @@ Feature: profile d script
   @BUILD_DIR
   Scenario: Populates environment with secrets from Conjur
     Given the 'compile' script is run
+    And conjur-env is installed
     And a root policy:
     """
     - !variable conjur_single_line_secret_id

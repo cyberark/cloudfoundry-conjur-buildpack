@@ -4,6 +4,7 @@ Feature: profile d scripts without the buildpack
   @BUILD_DIR
   Scenario: Populates environment with secrets from Conjur
     Given the .profile.d scripts are copied into the lib directory of the app's root folder
+    And conjur-env is installed
     And a root policy:
     """
     - !variable conjur_single_line_secret_id

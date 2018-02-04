@@ -6,9 +6,8 @@ ESCAPED_BUILD_DIR=$(echo $BUILD_DIR | sed -e 's/[\/&]/\\&/g')
 BIN_DIR=$(cd $(dirname $0); pwd)
 ROOT_DIR=$(dirname $BIN_DIR)
 
-$ROOT_DIR/lib/0000_install-summon.sh $BUILD_DIR
-
 pushd $BUILD_DIR
-  mkdir -p ".profile.d"
+  mkdir -p .profile.d bin
+  cp $ROOT_DIR/deps/conjur-env ./bin/conjur-env
   cp $ROOT_DIR/lib/0001_retrieve-secrets.sh ./.profile.d/0001_retrieve-secrets.sh
 popd

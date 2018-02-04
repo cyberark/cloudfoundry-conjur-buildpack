@@ -1,10 +1,5 @@
-Then(/^summon is installed$/) do
-  `#{@BIN_DIR}/summon -v`
-  expect($?.exitstatus).to eq (0)
-end
-
-Then(/^summon-conjur is installed$/) do
-  `#{@BIN_DIR}/summon-conjur -v`
+Then(/^conjur-env is installed$/) do
+  `ls #{@BIN_DIR}/conjur-env`
   expect($?.exitstatus).to eq (0)
 end
 

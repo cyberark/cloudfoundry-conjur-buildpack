@@ -8,5 +8,6 @@ echo "Target file: $ZIP_FILE"
 
 pushd ${SRC_DIR}
   rm -f "$ZIP_FILE"
-  zip -r "$ZIP_FILE" bin lib
+  ./conjur-env/build.sh
+  zip -r "$ZIP_FILE" bin lib deps
 popd
