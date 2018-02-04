@@ -92,7 +92,8 @@ func main() {
 	printAndExitIfError(err)
 
 	tempFactory := NewTempFactory("")
-	//defer tempFactory.Cleanup()
+	// defer tempFactory.Cleanup()
+	// no need to cleanup because we're injecting values to the environment
 
 	type Result struct {
 		key string
