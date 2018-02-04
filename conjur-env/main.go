@@ -42,14 +42,14 @@ func (c ConjurCredentials) setEnv() {
 const SERVICE_LABEL="cyberark-conjur"
 func setConjurCredentialsEnv() error {
 	// Get the Conjur connection information from the VCAP_SERVICES
-	s := os.Getenv("VCAP_SERVICES")
+	VCAP_SERVICES := os.Getenv("VCAP_SERVICES")
 
-	if s == "" {
-		return fmt.Errorf("VCAP_SERVICES environment variable not found\n")
+	if VCAP_SERVICES == "" {
+		return fmt.Errorf("VCAP_SERVICES environment variable is empty or doesn't exist\n")
 	}
 
 	services := make(map[string][]ConjurInfo)
-	err := json.Unmarshal([]byte(s), &services)
+	err := json.Unmarshal([]byte(VCAP_SERVICES), &services)
 	if err != nil {
 		return fmt.Errorf("Error parsing Conjur connection information: %v\n", err.Error())
 	}
@@ -79,9 +79,6 @@ func main() {
 	var (
 		provider Provider
 		err error
-	)
-
-	var (
 		secrets secretsyml.SecretsMap
 	)
 
@@ -105,6 +102,7 @@ func main() {
 	results := make(chan Result, len(secrets))
 	var wg sync.WaitGroup
 
+	// Lazy loading provider
 	for _, spec := range secrets {
 		if provider == nil && spec.IsVar() {
 			provider, err = NewProvider()
