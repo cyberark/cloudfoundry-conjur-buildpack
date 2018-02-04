@@ -2,12 +2,11 @@
 # bin/compile <build-dir>
 
 BUILD_DIR=$1
-ESCAPED_BUILD_DIR=$(echo $BUILD_DIR | sed -e 's/[\/&]/\\&/g')
 BIN_DIR=$(cd $(dirname $0); pwd)
-ROOT_DIR=$(dirname $BIN_DIR)
+BUILDPACK_DIR=$(dirname $BIN_DIR)
 
-pushd $BUILD_DIR
+pushd ${BUILD_DIR}
   mkdir -p .profile.d bin
-  cp $ROOT_DIR/deps/conjur-env ./bin/conjur-env
-  cp $ROOT_DIR/lib/0001_retrieve-secrets.sh ./.profile.d/0001_retrieve-secrets.sh
+  cp ${BUILDPACK_DIR}/deps/conjur-env ./bin/conjur-env
+  cp ${BUILDPACK_DIR}/lib/0001_retrieve-secrets.sh ./.profile.d/0001_retrieve-secrets.sh
 popd
