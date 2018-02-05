@@ -26,7 +26,7 @@ Given(/^the '([^"]*)' script is run$/) do |script|
   step "the '#{ENV['BUILDPACK_BUILD_DIR']}/bin/#{script} #{@BUILD_DIR}' command is run"
 end
 
-Given(/^the compile script is run the app's root folder$/) do
+Given(/^the compile script is run against the app's root folder$/) do
   step "the following command is run:", <<EOS
 set +x
 #{ENV['BUILDPACK_BUILD_DIR']}/bin/compile #{@BUILD_DIR}
