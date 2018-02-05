@@ -28,7 +28,6 @@ end
 
 Given(/^the compile script is run against the app's root folder$/) do
   step "the following command is run:", <<EOS
-set +x
 #{ENV['BUILDPACK_BUILD_DIR']}/bin/compile #{@BUILD_DIR}
 EOS
 end
