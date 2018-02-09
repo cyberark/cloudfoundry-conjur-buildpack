@@ -1,2 +1,0 @@
-require './foo'
-run FooApp
