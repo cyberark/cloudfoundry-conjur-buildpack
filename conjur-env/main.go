@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sync"
+	"strconv"
 	"github.com/cyberark/summon/secretsyml"
 	"github.com/cyberark/conjur-api-go/conjurapi"
 	"os"
@@ -26,10 +27,12 @@ type ConjurInfo struct {
 }
 
 type ConjurCredentials struct {
-	ApplianceURL     string `json:"appliance_url"`
-	APIKey     		 string `json:"authn_api_key"`
-	Login     		 string `json:"authn_login"`
-	Account 		 string `json:"account"`
+	ApplianceURL   string `json:"appliance_url"`
+	APIKey         string `json:"authn_api_key"`
+	Login          string `json:"authn_login"`
+	Account        string `json:"account"`
+	SSLCertificate string `json:"ssl_certificate"`
+	Version        int    `json:"version"`
 }
 
 func (c ConjurCredentials) setEnv() {
@@ -37,6 +40,8 @@ func (c ConjurCredentials) setEnv() {
 	os.Setenv("CONJUR_AUTHN_LOGIN", c.Login)
 	os.Setenv("CONJUR_AUTHN_API_KEY", c.APIKey)
 	os.Setenv("CONJUR_ACCOUNT", c.Account)
+	os.Setenv("CONJUR_SSL_CERTIFICATE", c.SSLCertificate)
+	os.Setenv("CONJUR_VERSION", strconv.Itoa(c.Version))
 }
 
 const SERVICE_LABEL="cyberark-conjur"

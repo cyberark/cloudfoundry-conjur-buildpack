@@ -17,7 +17,9 @@ trap 'err_report $LINENO' ERR
 #      "appliance_url": "https://conjur.myorg.com/",
 #      "authn_api_key": "2389fh3hf9283niiejwfhjsb83ydbn23u",
 #      "authn_login": "3F20D12E-A470-4B7B-8778-C8885769887F",
-#      "account": "brokered-services"
+#      "account": "brokered-services",
+#      "ssl_certificate": "-----BEGIN CERTIFICATE----...",
+#      "version": 4
 #    }
 #  }]
 #}

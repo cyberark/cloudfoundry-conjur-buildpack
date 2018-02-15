@@ -58,7 +58,9 @@ export VCAP_SERVICES='
    "appliance_url": "#{Conjur.configuration.appliance_url}",
    "authn_api_key": "#{admin_api_key}",
    "authn_login": "admin",
-   "account": "#{Conjur.configuration.account}"
+   "account": "#{Conjur.configuration.account}",
+   "ssl_certificate": "",
+   "version": "5"
   }
  }]
 }
