@@ -1,0 +1,11 @@
+version: '2.1'
+services:
+  conjur-env-builder:
+    build: .
+    volumes:
+      - .:/go/src/github.com/cyberark/conjur-env
+      - ../vendor:/pkg
+    environment:
+      CGO_ENABLED: 0
+      GOOS: linux
+    command: go build -o /pkg/conjur-env -a -ldflags '-extldflags "-static"' .
