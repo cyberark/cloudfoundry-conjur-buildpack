@@ -3,5 +3,5 @@ ci/features/reports/
 buildpack-build/
 .DS_Store
 .idea/
-vendor
+./vendor/
 cloudfoundry_conjur_buildpack/
