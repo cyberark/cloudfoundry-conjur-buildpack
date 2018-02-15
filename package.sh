@@ -6,14 +6,8 @@ cd $(dirname $0)
 
 rm -rf vendor/conjur-env
 # http://blog.wrouesnel.com/articles/Totally%20static%20Go%20builds/
-docker run --rm \
- -v "$PWD/vendor":/vendor \
- -v "$PWD/conjur-env":/go/src/conjur-env \
- -w /go/src/conjur-env \
- -e CGO_ENABLED=0 \
- -e GOOS=linux \
- golang:1.8-alpine3.5 \
- go build -o /vendor/conjur-env -a -ldflags '-extldflags "-static"' .
+docker-compose -f conjur-env/docker-compose.yml build
+docker-compose -f conjur-env/docker-compose.yml run --rm conjur-env-builder
 
 docker-compose build
 docker-compose run --rm tester ./package_buildpack.sh
