@@ -60,7 +60,7 @@ export VCAP_SERVICES='
    "authn_login": "admin",
    "account": "#{Conjur.configuration.account}",
    "ssl_certificate": "",
-   "version": "5"
+   "version": 5
   }
  }]
 }
