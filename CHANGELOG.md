@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.0] - 2018-03-01
 
 ### Changed
-Buildpack uses binaries of Summon and `conjur-api-go` instead of installing Summon and Summon-Conjur each time it is invoked.
+Buildpack uses `conjur-env` binary built from the guts of `summon` and `conjur-api-go` instead of installing Summon and Summon-Conjur each time it is invoked.
 
 ## [0.3.0] - 2018-02-13
 
