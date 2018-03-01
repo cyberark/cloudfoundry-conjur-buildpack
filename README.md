@@ -122,13 +122,13 @@ Before getting started, you should install some developer tools. These are not r
 To test the usage of the Conjur Service Broker within a CF deployment, you can
 follow the demo scripts in the [Cloud Foundry demo repo](https://github.com/conjurinc/cloudfoundry-conjur-demo).
 
-To prepare to run the test suite on your local machine, call `./package.sh` to build the Summon and Golang Conjur API binaries and place them in the `vendor/` directory. Once you have done this, simply call `./test.sh`. The `test.sh` script will stand up the needed containers and run the full suite of rspec and cucumber tests.
+To prepare to run the test suite on your local machine, call `./package.sh` to build the `summon` and `conjur-api-go` binaries and place them in the `vendor/` directory. Once you have done this, simply call `./test.sh`. The `test.sh` script will stand up the needed containers and run the full suite of rspec and cucumber tests.
 
 When you generate a new release, run `./package.sh` to generate a new release ZIP file and upload the ZIP file to include it with the release.
 
-### Updating the Summon and Golang Conjur API binaries
+### Updating the `summon` and `conjur-api-go` binaries
 
-To update the versions of Summon / `conjur-api-go` that are included in the buildpack, update to the appropriate version number in `conjur-env/Gopkg.toml`. To update `conjur-env/vendor/` and `conjur-env/Gopkg.lock`, start up a `conjur-env` container and run `dep ensure`:
+To update the versions of `summon` / `conjur-api-go` that are included in the buildpack, update to the appropriate version number in `conjur-env/Gopkg.toml`. To update `conjur-env/vendor/` and `conjur-env/Gopkg.lock`, start up a `conjur-env` container and run `dep ensure`:
 ```
 $ docker-compose -f conjur-env/docker-compose.yml run --entrypoint bash conjur-env-builder
 # dep ensure
