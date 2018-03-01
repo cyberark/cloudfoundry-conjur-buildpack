@@ -83,15 +83,17 @@ SSL_CERT: /tmp/ssl-cert.pem
 
 #### Push with `meta-buildpack`
 
-As described in the [`meta-buildpack` documentation](https://github.com/cf-platform-eng/meta-buildpack#how-it-works) the Conjur decorate buildpack will **ONLY** be invoked in the following are true:
+Before running `cf push`, ensure that:
 
-+ `cf push` with `meta-buildpack` installed and at the top of list of buildpacks. 
-+ no buildpack is specified in app's manifest.
-+ no `-b` flag value is provided to the CLI. 
++ `meta-buildpack` is installed and at the top of list of buildpacks
++ No buildpack is specified in your application's manifest
++ You will not specify a buildpack with the `-b` flag on `cf push`
 
-Assuming the app is bound to a Conjur service instance, pushing the app will result in the Conjur buildpack being invoked, as well as the language buildpack. The secrets specified in the `secrets.yml` file will now be available in the session environment variables at the start of the app.
+If any of these conditions are not met, follow the [alternate usage directions](#custom-buildpack-usage) below.
 
-### <a name="custom-buildpack-usage"></a>Usage for users with custom buildpacks
+Once you run `cf push`, assuming the app is bound to a Conjur service instance, the `meta-buildpack` will first invoke the appropriate language buildpack and then any decorator buildpacks (including the Conjur Buildpack). The secrets specified in the `secrets.yml` file will be available in the session environment variables at the start of the app.
+
+#### <a name="custom-buildpack-usage"></a>Usage for users with custom buildpacks
 
 To retrieve secrets without using `meta-buildpack` you can simply:
 
