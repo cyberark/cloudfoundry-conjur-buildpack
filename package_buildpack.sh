@@ -13,5 +13,5 @@ pushd ${SRC_DIR}
     exit 1;
   }
   rm -f "$ZIP_FILE"
-  zip -r "$ZIP_FILE" bin lib vendor upload.sh buildpack_vars.sh package_buildpack.sh
+  zip -r "$ZIP_FILE" bin lib vendor upload.sh buildpack_vars.sh package_buildpack.sh VERSION
 popd
