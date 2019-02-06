@@ -1,11 +1,15 @@
 #!/bin/bash -e
-# bin/compile <build-dir>
-
-echo "[cyberark-conjur-buildpack]: compiling"
+# bin/supply <build-dir> <cache-dir> <deps-dir> <index>
 
 BUILD_DIR=$1
+CACHE_DIR=$2
+DEPS_DIR=$3
+INDEX=$4
+
 BIN_DIR=$(cd $(dirname $0); pwd)
 BUILDPACK_DIR=$(dirname $BIN_DIR)
+
+echo "[cyberark-conjur-buildpack]: supplying"
 
 pushd ${BUILD_DIR}
   mkdir -p .profile.d vendor

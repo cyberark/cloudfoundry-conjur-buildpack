@@ -12,7 +12,7 @@ services:
     image: postgres:9.3
 
   conjur:
-    image: cyberark/conjur:0.3.0-stable
+    image: cyberark/conjur
     command: server -a cucumber -f /empty.yml
     environment:
       CONJUR_ADMIN_PASSWORD: admin

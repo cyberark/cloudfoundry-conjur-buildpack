@@ -1,4 +1,21 @@
 #!/bin/bash -e
-# bin/detect <build-dir>
-# We are a decorator, not a buildpack, so we always decline to build
-exit 1
+# bin/decorate <build-dir>
+
+#export VCAP_SERVICES='
+#{
+#  "cyberark-conjur": [{
+#    "credentials": {
+#      "appliance_url": "https://conjur.myorg.com/",
+#      "authn_api_key": "2389fh3hf9283niiejwfhjsb83ydbn23u",
+#      "authn_login": "3F20D12E-A470-4B7B-8778-C8885769887F",
+#      "account": "brokered-services",
+#      "ssl_certificate": "-----BEGIN CERTIFICATE----...",
+#      "version": 4
+#    }
+#  }]
+#}
+#'
+
+BUILD_DIR=$1
+
+[ -f $BUILD_DIR/secrets.yml ] && [[ true = $(echo $VCAP_SERVICES | jq 'has("cyberark-conjur")') ]] || exit 1
