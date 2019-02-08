@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# bin/compile is currently required, even though it's deprecated. This is likely a bug.
+
+exit
