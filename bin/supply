@@ -11,6 +11,8 @@ BUILDPACK_DIR=$(dirname $BIN_DIR)
 
 echo "[cyberark-conjur-buildpack]: supplying"
 
+[ -f $BUILD_DIR/secrets.yml ] && [[ true = $(echo $VCAP_SERVICES | jq 'has("cyberark-conjur")') ]] || exit 1
+
 pushd ${BUILD_DIR}
   mkdir -p .profile.d vendor
   cp ${BUILDPACK_DIR}/vendor/conjur-env ./vendor/conjur-env
