@@ -3,7 +3,9 @@ Feature: profile d scripts without the buildpack
 
   @BUILD_DIR
   Scenario: Populates environment with secrets from Conjur
-    Given the supply script is run against the app's root folder
+    Given the build directory has a secrets.yml file
+    And VCAP_SERVICES contains cyberark-conjur credentials
+    And the supply script is run against the app's root folder
     And conjur-env is installed
     And a root policy:
     """

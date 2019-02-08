@@ -25,16 +25,17 @@ trap 'err_report $LINENO' ERR
 #}
 #'
 
-# making sure that no tracing takes place, we're dealing with secrets here :)
+# Prevent tracing to ensures secrets won't be leaked.
 declare xtrace=""
 case $- in
   (*x*) xtrace="xtrace";;
 esac
 set +x
 
-# inject secrets into environment
-pushd $1
-  eval "$(./vendor/conjur-env)"
+# $HOME points to the app directory, which should contains a secrets.yml file.
+pushd $HOME
+  # __BUILDPACK_INDEX__ is replaced by sed in the 'supply' script.
+  eval "$($DEPS_DIR/__BUILDPACK_INDEX__/vendor/conjur-env)"
 popd
 
 [ ! -z "$xtrace" ] && set -x

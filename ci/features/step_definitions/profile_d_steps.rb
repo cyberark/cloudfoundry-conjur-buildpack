@@ -1,7 +1,7 @@
 When(/^the retrieve secrets \.profile\.d script is sourced$/) do
   @commands ||= []
   @commands << <<EOL
-. #{@BUILD_DIR}/.profile.d/0001_retrieve-secrets.sh #{@BUILD_DIR}
+HOME=#{@BUILD_DIR} DEPS_DIR=#{@DEPS_DIR} . #{@DEPS_DIR}/#{@INDEX_DIR}/.profile.d/0001_retrieve-secrets.sh
 EOL
 end
 
@@ -12,6 +12,6 @@ end
 When(/^the \.profile\.d scripts are sourced$/) do
   @commands ||= []
   @commands << <<EOL
-. #{@BUILD_DIR}/.profile.d/0001_retrieve-secrets.sh #{@BUILD_DIR}
+HOME=#{@BUILD_DIR} DEPS_DIR=#{@DEPS_DIR} . #{@DEPS_DIR}/#{@INDEX_DIR}/.profile.d/0001_retrieve-secrets.sh 
 EOL
 end
