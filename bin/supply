@@ -1,8 +1,13 @@
 #!/bin/bash -e
 # bin/supply <build-dir> <cache-dir> <deps-dir> <index>
 
+# The build directory for the app.
 BUILD_DIR=$1
+
+# To store assets needed during build (currently unused).
 CACHE_DIR=$2
+
+# App dependencies are stored in $DEPS_DIR/$INDEX_DIR.
 DEPS_DIR=$3
 INDEX_DIR=$4
 
