@@ -1,10 +1,12 @@
-FROM golang:1.8
-MAINTAINER Conjur Inc.
+FROM golang:1.11-stretch
+MAINTAINER CyberArk Software, Inc.
 
-RUN go get -u github.com/golang/dep/cmd/dep
+ENV GOOS=linux \
+    GOARCH=amd64 \
+    CGO_ENABLED=0
 
-RUN mkdir -p /go/src/github.com/cyberark/conjur-env
-WORKDIR /go/src/github.com/cyberark/conjur-env
+WORKDIR /conjur-env
 
-COPY . .
-RUN dep ensure
+COPY go.mod go.sum /conjur-env/
+
+RUN go mod download

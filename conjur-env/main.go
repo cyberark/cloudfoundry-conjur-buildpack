@@ -77,7 +77,12 @@ func NewProvider() (Provider, error) {
 		return nil, err
 	}
 
-	return conjurapi.NewClientFromEnvironment(conjurapi.LoadConfig())
+	config, err := conjurapi.LoadConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	return conjurapi.NewClientFromEnvironment(config)
 }
 
 func main() {

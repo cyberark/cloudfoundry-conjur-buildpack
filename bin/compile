@@ -1,14 +1,5 @@
-#!/bin/bash -e
-# bin/compile <build-dir>
+#!/bin/bash
 
-echo "[cyberark-conjur-buildpack]: compiling"
+# bin/compile is currently required, even though it's deprecated. This is likely a bug.
 
-BUILD_DIR=$1
-BIN_DIR=$(cd $(dirname $0); pwd)
-BUILDPACK_DIR=$(dirname $BIN_DIR)
-
-pushd ${BUILD_DIR}
-  mkdir -p .profile.d vendor
-  cp ${BUILDPACK_DIR}/vendor/conjur-env ./vendor/conjur-env
-  cp ${BUILDPACK_DIR}/lib/0001_retrieve-secrets.sh ./.profile.d/0001_retrieve-secrets.sh
-popd
+exit

@@ -22,13 +22,9 @@ EOS
   f.unlink
 end
 
-Given(/^the '([^"]*)' script is run$/) do |script|
-  step "the '#{ENV['BUILDPACK_BUILD_DIR']}/bin/#{script} #{@BUILD_DIR}' command is run"
-end
-
-Given(/^the compile script is run against the app's root folder$/) do
+Given(/^the supply script is run against the app's root folder$/) do
   step "the following command is run:", <<EOS
-#{ENV['BUILDPACK_BUILD_DIR']}/bin/compile #{@BUILD_DIR}
+#{ENV['BUILDPACK_BUILD_DIR']}/bin/supply #{@BUILD_DIR} #{@CACHE_DIR} #{@DEPS_DIR} #{@INDEX_DIR}
 EOS
 end
 

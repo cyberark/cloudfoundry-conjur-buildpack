@@ -1,4 +1,0 @@
-#!/bin/bash -e
-# bin/detect <build-dir>
-# We are a decorator, not a buildpack, so we always decline to build
-exit 1

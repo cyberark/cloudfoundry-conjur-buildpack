@@ -13,11 +13,18 @@ end
 
 Before('@BUILD_DIR') do
   @BUILD_DIR = Dir.mktmpdir
-  @VENDOR_DIR = "#{@BUILD_DIR}/vendor"
+  @CACHE_DIR = Dir.mktmpdir
+  @DEPS_DIR = Dir.mktmpdir
+  @INDEX_DIR = "1"
+
+  Dir.mkdir(File.join(@DEPS_DIR, @INDEX_DIR), 0700)
+  @VENDOR_DIR = "#{@DEPS_DIR}/#{@INDEX_DIR}/vendor"
 end
 
 After('@BUILD_DIR') do
   FileUtils.remove_entry_secure @BUILD_DIR
+  FileUtils.remove_entry_secure @CACHE_DIR
+  FileUtils.remove_entry_secure @DEPS_DIR
 end
 
 def reset_root_policy
