@@ -39,17 +39,16 @@ Make sure your Pull Request includes an update to the [CHANGELOG](https://github
 
 ### Updating the `conjur-env` Binary
 
-To update the versions of `summon` / `conjur-api-go` that are included in the `conjur-env` binary in the buildpack:
+The `conjur-env` binary uses Go modules to manage dependencies. To update the versions of `summon` / `conjur-api-go` that are included in the `conjur-env` binary in the buildpack, make sure you have Go installed locally (at least version 1.11) and run:
 
-- Bump the appropriate version number in `conjur-env/Gopkg.toml`
-- Start up a `conjur-env` container and run `dep ensure` to update `conjur-env/vendor/` and `conjur-env/Gopkg.lock`:
-  ```
-  $ docker-compose -f conjur-env/docker-compose.yml run --entrypoint bash conjur-env-builder
-  # dep ensure
-  ```
-  You can verify that the correct dependencies are being used by running `dep status` from within the container before exiting and committing your changes.
-- Commit your changes
-- The next time `./package.sh` is run the `vendor/conjur-env` directory will be created with updated dependencies.
+```
+$ cd conjur-env/
+$ go get github.com/cyberark/[repo]@v[version]
+```
+
+This will automatically update go.mod and go.sum.
+
+Commit your changes, and the next time `./package.sh` is run the `vendor/conjur-env` directory will be created with updated dependencies.
 
 ### Testing
 
