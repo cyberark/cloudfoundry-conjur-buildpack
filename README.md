@@ -77,8 +77,21 @@ SSL_CERT: /tmp/ssl-cert.pem
 
 When you deploy your application, ensure it is bound to a Conjur service instance and add the Conjur Buildpack to your `cf push` command:
 
+```sh
+cf push my-app -b conjur_buildpack ... -b final_buildpack
 ```
-cf push my-app -b conjur-buildpack -b final-buildpack
+
+Alternatively, the buildpacks may be specified in the application manifest, for example:
+
+```yaml
+---
+applications:
+- name: my-app
+  services:
+  - conjur
+  buildpacks:
+  - conjur_buildpack
+  - ruby_buildpack
 ```
 
 When your application starts, the Conjur Buildpack will inject the secrets specified in the `secrets.yml` file into the application process as environment variables.
