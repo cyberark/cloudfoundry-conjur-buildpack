@@ -1,4 +1,4 @@
-The CyberArk Conjur Buildpack is a [supply buildpack](https://docs.cloudfoundry.org/buildpacks/custom.html#contract) that provides convenient and secure access to secrets stored in Conjur.
+The CyberArk Conjur Buildpack is a [supply buildpack](https://docs.cloudfoundry.org/buildpacks/understand-buildpacks.html#supply-script) that installs scripts to provide convenient and secure access to secrets stored in Conjur.
 
 The buildpack supplies scripts to your application that do the following:
 
