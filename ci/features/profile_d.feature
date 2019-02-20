@@ -28,7 +28,7 @@ Feature: profile d script
     CONJUR_MULTI_LINE_SECRET: !var conjur_multi_line_secret_id
     LITERAL_SECRET: some literal secret
     """
-    When the retrieve secrets .profile.d script is sourced
+    When the retrieve secrets profile.d script is sourced
     And the 'env' command is run
     Then the environment contains
     """

@@ -12,16 +12,16 @@ The buildpack supplies scripts to your application that do the following:
 
 + Your app must have a `secrets.yml` file in its root directory when deployed
 
-## How Does the Buildpack Work ?
+## How Does the Buildpack Work?
 
-The buildpack uses a [supply script](https://docs.cloudfoundry.org/buildpacks/understand-buildpacks.html#supply-script) to copy files into the application's dependency directory under a subdirectory corresponding to the buildpack's index. The `lib/0001_retrieve-secrets.sh` script is copied into a `.profile.d` subdirectory so that it will run automatically when the app starts and the `conjur-env` binary is copied to a `vendor` subdirectory. In other words, your application will end up with the following two files:
+The buildpack uses a [supply script](https://docs.cloudfoundry.org/buildpacks/understand-buildpacks.html#supply-script) to copy files into the application's dependency directory under a subdirectory corresponding to the buildpack's index. The `lib/0001_retrieve-secrets.sh` script is copied into a `profile.d` subdirectory so that it will run automatically when the app starts and the `conjur-env` binary is copied to a `vendor` subdirectory. In other words, your application will end up with the following two files:
 
 ```
-- $DEPS_DIR/$BUILDPACK_INDEX/.profile.d/0001-retrieve-secrets.sh
+- $DEPS_DIR/$BUILDPACK_INDEX/profile.d/0001-retrieve-secrets.sh
 - $DEPS_DIR/$BUILDPACK_INDEX/vendor/conjur-env
 ```
 
-The `.profile.d` script is run automatically when the application starts and is responsible for retrieving secrets and injecting them into the app's session environment variables.
+The `profile.d` script is run automatically when the application starts and is responsible for retrieving secrets and injecting them into the app's session environment variables.
 
 The `conjur-env` binary leverages the [Conjur Go API](https://github.com/cyberark/conjur-api-go) and [Summon](https://github.com/cyberark/summon)
 to authenticate with Conjur and retrieve secrets.
