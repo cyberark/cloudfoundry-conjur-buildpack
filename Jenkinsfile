@@ -6,7 +6,6 @@ pipeline {
   options {
     timestamps()
     buildDiscarder(logRotator(numToKeepStr: '30'))
-    lock resource: "TEST_LOCK_NAME"
   }
 
   triggers {
@@ -31,6 +30,7 @@ pipeline {
     }
     stage('Test') {
       steps {
+        sh "BRANCH_NAME: ${env.BRANCH_NAME}"
         sh 'summon ./test.sh'
 
         junit 'ci/features/reports/*.xml'
