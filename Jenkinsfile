@@ -30,7 +30,7 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh "BRANCH_NAME: ${env.BRANCH_NAME}"
+        sh "echo BRANCH_NAME: ${env.BRANCH_NAME}"
         sh 'summon ./test.sh'
 
         junit 'ci/features/reports/*.xml'

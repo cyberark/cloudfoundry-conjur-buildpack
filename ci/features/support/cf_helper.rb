@@ -2,7 +2,7 @@ module CfHelper
   def cf_online_buildpack_route
     branch_name = ENV['BRANCH_NAME']
     hash = "##{branch_name}" unless branch_name == 'master'
-    "https://github.com/cyberark/cloudfoundry-conjur-buildpack#{hash}"
+    "https://github.com/cyberark/cloudfoundry-conjur-buildpack.git#{hash}"
   end
 
   def cf_app_route
