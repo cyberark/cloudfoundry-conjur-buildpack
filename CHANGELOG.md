@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [2.1.4] - 2020-07-16
 
 ### Changed
-- Go dependencies updated for the `conjur-env` binary
-- Ruby gems and dependencies updated
+- Go dependencies updated for the `conjur-env` binary.
+  [cyberark/cloudfoundry-conjur-buildpack#66](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/66)
 
 ## [2.1.3] - 2020-01-29
 
