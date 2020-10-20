@@ -12,11 +12,10 @@ RUN apt-get update && \
                        openssl \
                        ruby2.5-dev
 
-RUN wget -q https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key && \
-    apt-key add cli.cloudfoundry.org.key && \
-    echo "deb https://packages.cloudfoundry.org/debian stable main" > /etc/apt/sources.list.d/cloudfoundry-cli.list && \
-    apt-get update && \
-    apt-get install -y cf-cli && \
+# Install a specific older version, since our remote foundation currently uses
+# TAS 2.4
+RUN curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.52.0&source=github-rel" | tar -zx && \
+    mv cf /usr/local/bin && \
 
     mkdir -p "$CI_PATH" && \
 
