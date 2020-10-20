@@ -14,7 +14,7 @@ RUN apt-get update && \
 
 # Install a specific older version, since our remote foundation currently uses
 # TAS 2.4
-RUN curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.52.0&source=github-rel" | tar -zx && \
+RUN curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.51.0&source=github-rel" | tar -zx && \
     mv cf /usr/local/bin && \
 
     mkdir -p "$CI_PATH" && \
