@@ -13,6 +13,12 @@ pipeline {
   }
 
   stages {
+    stage('Grant IP Access') {
+      steps {
+        // Grant access to this Jenkins agent's IP to AWS security groups
+        grantIPAccess()
+      }
+    }
     stage('Validate') {
       parallel {
         stage('Changelog') {
@@ -41,6 +47,8 @@ pipeline {
   post {
     always {
       cleanupAndNotify(currentBuild.currentResult)
+      // Remove this Jenkins Agent's IP from AWS security groups
+      removeIPAccess()
     }
   }
 }
