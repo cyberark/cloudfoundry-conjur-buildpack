@@ -24,7 +24,7 @@ Feature: profile d script
     And VCAP_SERVICES contains cyberark-conjur credentials
     And the build directory has this secrets.yml file
     """
-    CONJUR_SINGLE_LINE_SECRET: !var conjur_single_line_secret_id
+    CONJUR_SINGLE_LINE-SECRET: !var conjur_single_line_secret_id
     CONJUR_MULTI_LINE_SECRET: !var conjur_multi_line_secret_id
     LITERAL_SECRET: some literal secret
     """
