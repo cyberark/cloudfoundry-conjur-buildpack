@@ -1,6 +1,7 @@
-module BuildpackWorld
-  include CfHelper
+require 'fileutils'
+require_relative 'cf_helper'
 
+module BuildpackWorld
   def load_root_policy policy
     load_policy 'root', policy
   end
@@ -23,7 +24,7 @@ module BuildpackWorld
   end
 
   def admin_password
-    'admin'
+    'ADmin123!!!!'
   end
 
   def ci_user
