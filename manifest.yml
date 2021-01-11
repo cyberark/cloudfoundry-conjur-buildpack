@@ -60,4 +60,5 @@ include_files:
 - lib/install_go.sh
 - vendor/conjur-env
 - manifest.yml
+- upload.sh
 language: conjur # used solely to name the .zip
