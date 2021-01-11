@@ -4,13 +4,13 @@ services:
     build: .
     image: buildpack-tester
     environment:
-      BUILDPACK_BUILD_DIR: $BUILDPACK_ROOT_DIR/buildpack-build # tests run against the code in this directory
+      BUILDPACK_BUILD_DIR: /cyberark/cloudfoundry-conjur-buildpack/conjur_buildpack #tests run against the code in this directory
       CF_STACK: cflinuxfs3
       CF_API_ENDPOINT: 
       CF_ADMIN_PASSWORD:
       BRANCH_NAME:
     volumes:
-      - ..:/$BUILDPACK_ROOT_DIR
+      - ..:/cyberark/cloudfoundry-conjur-buildpack
 
   postgres:
     image: postgres:9.3

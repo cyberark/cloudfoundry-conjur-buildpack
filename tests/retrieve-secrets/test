@@ -109,6 +109,7 @@ source_test_file() {
 @test "${TARGET_FILE}: error is thrown when the environment binary raises an error" {
   declare -x CONJUR_ENV_DIR=$(mktemp)
 
+  # Create a fake "conjur-env binary" that returns an error
   echo ">&2 echo 'error fetching variable' && exit 1" > ${CONJUR_ENV_DIR}
   chmod +x ${CONJUR_ENV_DIR}
 

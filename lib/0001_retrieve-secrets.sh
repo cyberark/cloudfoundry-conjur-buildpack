@@ -12,7 +12,7 @@ echo "[cyberark-conjur-buildpack]: retrieving & injecting secrets"
 err_report() {
     local previous_exit=$?
     trap - ERR
-    echo "${BASH_SOURCE}: Error on line $1" 1>&2
+    printf "%s: Error on line %s" "${BASH_SOURCE[@]}" "$1" 1>&2
     exit ${previous_exit}
 }
 trap 'err_report $LINENO' ERR
@@ -26,7 +26,7 @@ trap 'rm -f "$temp_err_file"' EXIT
 conjur_env_err() {
     local previous_exit=$?
     trap - ERR
-    echo "${BASH_SOURCE}: Error on line $1: $(<$temp_err_file)"
+    printf "%s: Error on line %s: $(<"$temp_err_file")" "${BASH_SOURCE[@]}" "$1"
     exit ${previous_exit}
 }
 
@@ -36,7 +36,7 @@ conjur_env_err() {
 export_err() {
     local previous_exit=$?
     trap - ERR
-    echo "${BASH_SOURCE}: Error on line $1: Unable to export \`$2\`; value may not be a valid identifier"
+    printf "%s: Error on line %s: Unable to export \`%s\`; value may not be a valid identifier" "${BASH_SOURCE[@]}" "$1" "$2"
     exit ${previous_exit}
 }
 
@@ -53,10 +53,10 @@ esac
 set +x
 
 # $HOME points to the app directory, which should contains a secrets.yml file.
-pushd $HOME
+pushd "$HOME"
   # Retrieve environmental settings
   trap 'conjur_env_err $LINENO' ERR
-  env="$(${CONJUR_ENV_DIR} 2>$temp_err_file)"
+  env="$(${CONJUR_ENV_DIR} 2>"$temp_err_file")"
 
   # Iterate through and export each statement silently. If there is an
   # error, generate a sanitized error report that includes only the
@@ -70,7 +70,7 @@ pushd $HOME
     if [[ $line =~ (.*):[[:space:]]*(.*) ]]; then
         var="${BASH_REMATCH[1]}"
         trap 'export_err $LINENO $var' ERR
-        value="$(base64 -d <<< ${BASH_REMATCH[2]})"
+        value="$(base64 -d <<< "${BASH_REMATCH[2]}")"
         export "$var=$value" 2> /dev/null
     else
         # Invalid format. Raise an error but don't display sensitive info. 

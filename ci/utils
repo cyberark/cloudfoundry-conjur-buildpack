@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+export DOCKER_COMPOSE_FILE="../tests/docker-compose.yml"
+export CONTAINER_FEATURES_DIR="/cyberark/cloudfoundry-conjur-buildpack/tests/integration"
+
+function announce {
+  echo -e """
+  --------------
+  ${1}
+  --------------
+  """
+}
+
+function finish {
+  announce 'Removing environment...'
+  docker-compose -f "$DOCKER_COMPOSE_FILE" down -v
+}
+
+function package_and_unpack_buildpack {
+  announce 'Packaging and Unpacking the Buildpack...'
+  ../package.sh
+  ../unpack.sh
+}
+
+# Set up the containers to run in their own namespace
+function setup_env {
+  announce 'Setting environment variables...'
+  COMPOSE_PROJECT_NAME="$(basename "$PWD")_$(openssl rand -hex 3)"
+  export COMPOSE_PROJECT_NAME
+  echo "COMPOSE_PROJECT_NAME: $COMPOSE_PROJECT_NAME"
+
+  BRANCH_NAME=${BRANCH_NAME:-$(git symbolic-ref --short HEAD)}
+  export BRANCH_NAME
+  echo "BRANCH_NAME: $BRANCH_NAME"
+}
+
+function build_test_images {
+  announce 'Building test images...'
+  docker-compose -f "$DOCKER_COMPOSE_FILE" build
+}
+
+function start_conjur {
+  announce 'Waiting for Conjur to start...'
+  docker-compose -f "$DOCKER_COMPOSE_FILE" up -d conjur
+
+  docker-compose -f "$DOCKER_COMPOSE_FILE" exec -T conjur conjurctl wait -r 45 -p 80
+}

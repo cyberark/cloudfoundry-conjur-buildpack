@@ -70,16 +70,35 @@ below for details.
 
 To install the Conjur Buildpack, download a ZIP of [the latest release](https://github.com/cyberark/cloudfoundry-conjur-buildpack/releases),
 unzip the release into its own directory, and run the `upload.sh` script:
+
+```shell
+# Download latest version of the Conjur Buildpack
+wget -q --show-progress \
+  -O "${PWD}/conjur_buildpack.zip" \
+  $(curl -s \
+  "https://api.github.com/repos/cyberark/cloudfoundry-conjur-buildpack/releases/latest" \
+  | jq '.assets[0].browser_download_url' \
+  | sed 's/"//g')
+
+# Create the buildpack in your remote stack
+cf create-buildpack conjur_buildpack conjur_buildpack.zip 1
 ```
-mkdir conjur-buildpack
-cd conjur-buildpack/
-curl -L $(curl -s https://api.github.com/repos/cyberark/cloudfoundry-conjur-buildpack/releases/latest | \
-          jq .assets[0].browser_download_url | \
-          sed 's/"//g') \
-          > conjur-buildpack.zip
-unzip conjur-buildpack.zip
+
+The '1' will place it at the top of the detection priority.
+This is recommended to ensure proper installation of the
+secret retrieval script.
+
+Alternatively, you can clone the entire repository, and run the following commands:
+
+```shell
+./package.sh
 ./upload.sh
 ```
+
+The `./package.sh` script will run [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager)
+within the `buildpack` directory and create a `.ZIP` file. `upload.sh` will run
+`cf create-buildpack` similar to the command above, as well as removing prior
+instances of the Conjur Buildpack with `cf delete-buildpack`.
 
 Earlier versions of the Conjur Buildpack (v0.x) may be installed by cloning the
 repository and running `./upload.sh`.
@@ -187,7 +206,7 @@ repository address instead of specifying the installed buildpack name. This may
 be done with the `cf push` command or using the manifest file.
 
 ```sh
-cf push my-app -b https://github.com/cyberark/cloudfoundry-conjur-buildpack ... -b final_buildpack
+cf push my-app -b https://github.com/cyberark/cloudfoundry-conjur-buildpack#latest ... -b final_buildpack
 ```
 
 ```yaml
@@ -197,8 +216,16 @@ applications:
   services:
   - conjur
   buildpacks:
-  - https://github.com/cyberark/cloudfoundry-conjur-buildpack
+  - https://github.com/cyberark/cloudfoundry-conjur-buildpack#latest
   - ruby_buildpack
+```
+
+We recommend users specifically reference the `latest` branch when using the
+online version of the buildpack. The `latest` branch is up-to-date with the
+latest tagged buildpack release. You may also opt to reference a specific
+release version `TAG` by referring to the online buildpack as:
+```
+https://github.com/cyberark/cloudfoundry-conjur-buildpack#TAG
 ```
 
 ## Contributing

@@ -11,7 +11,7 @@ of the license associated with each component.
 SECTION 1: Apache License 2.0
 
    >>> github.com/cyberark/conjur-api-go-0.6.0
-   >>> gopkg.in/yaml.v2-2.2.8
+   >>> gopkg.in/yaml.v2-2.3.0
 
 
 
@@ -24,9 +24,9 @@ SECTION 2: BSD 3-clause "New" or "Revised" License
 SECTION 3: MIT License
 
    >>> github.com/cyberark/summon-0.8.2
-   >>> github.com/sirupsen/logrus-1.4.2
+   >>> github.com/sirupsen/logrus-1.6.0
    >>> github.com/stretchr/testify v1.2.2
-   >>> gopkg.in/yaml.v2-2.2.8
+   >>> gopkg.in/yaml.v2-2.3.0
 
 
 
@@ -62,7 +62,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
->>> gopkg.in/yaml.v2-2.2.8
+>>> gopkg.in/yaml.v2-2.3.0
 
 Copyright {yyyy} {name of copyright owner}
 
@@ -145,7 +145,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
->>> github.com/sirupsen/logrus-1.4.2
+>>> github.com/sirupsen/logrus-1.6.0
 
 The MIT License (MIT)
 
@@ -191,7 +191,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
->>> gopkg.in/yaml.v2-2.2.8
+>>> gopkg.in/yaml.v2-2.3.0
 
 The following files were ported to Go from C files of libyaml, and thus
 are still covered by their original copyright and license:

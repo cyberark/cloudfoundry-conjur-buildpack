@@ -6,6 +6,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.6] - 2020-01-11
+### Added
+- A [`manifest.yml`](./manifest.yml) has been added, allowing for
+  the usage of [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager)
+  and other native CloudFoundry features. Please refer
+  to [`manifest.yml`](./manifest.yml) for information on
+  dependencies and deprecation notices thereof, as well as a list
+  of files included in the Buildpack.
+  [cyberark/cloudfoundry-conjur-buildpack#79](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/79)
+
+### Changed
+- The project has been reorganized to respect Cloudfoundry Buildpack
+  best practices and improve maintainability. This also should
+  reduce overall build times, and slightly reduces the size
+  of the Conjur Buildpack `.ZIP`.
+  [PR cyberark/cloudfoundry-conjur-buildpack#99](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/99)
+- The default go version has been bumped to `1.15.x` in the manifest,
+  with other supported version listed as well.
+  [cyberark/cloudfoundry-conjur-buildpack#41](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/41)
+- Release tags will now be auto-archived in the `latest` branch. Users
+  consuming this buildpack via the online buildpack functionality should now
+  point their manifests to the `latest` branch and only consume release versions
+  of this buildpack.
+  [cyberark/cloudfoundry-conjur-buildpack#101](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/101)
+
+### Deprecated
+- Support for using the Conjur Buildpack with Conjur Enterprise v4 is now deprecated.
+  Support will be removed in the next release.
+  [cyberark/cloudfoundry-conjur-buildpack#73](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/73)
+
 ## [2.1.5] - 2020-11-06
 ### Added
 - Added sanity tests and additional validation of environment variable keys specified
@@ -95,7 +125,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.4...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.6...HEAD
+[2.1.6]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.5...v2.1.6
+[2.1.5]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.4...v2.1.5
 [2.1.4]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.3...v2.1.4
 [2.1.3]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.1...v2.1.2

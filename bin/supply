@@ -5,19 +5,19 @@
 BUILD_DIR=$1
 
 # To store assets needed during build (currently unused).
-CACHE_DIR=$2
+# CACHE_DIR=$2
 
 # App dependencies are stored in $DEPS_DIR/$INDEX_DIR.
 DEPS_DIR=$3
 INDEX_DIR=$4
 
-BIN_DIR=$(cd $(dirname $0); pwd)
-BUILDPACK_DIR=$(dirname $BIN_DIR)
+BIN_DIR="$(cd $(dirname "$0"); pwd)"
+BUILDPACK_DIR="$(dirname "${BIN_DIR}")"
 
 echo "[cyberark-conjur-buildpack]: supplying"
 
 echo "[cyberark-conjur-buildpack]: looking for secrets.yml"
-if  [ -f $BUILD_DIR/BOOT-INF/classes/secrets.yml ]; then
+if  [ -f "${BUILD_DIR}/BOOT-INF/classes/secrets.yml" ]; then
   # Spring Boot 1.4 changed where files get placed into the Executable Jar:
   # https://docs.spring.io/spring-boot/docs/current/reference/html/executable-jar.html
 
@@ -28,25 +28,25 @@ if  [ -f $BUILD_DIR/BOOT-INF/classes/secrets.yml ]; then
 
   # Future possible option rather than manipulate the files, is to locate the secrets.yml and then pass
   # the path to the conjur-env process (or even have the conjur-env find it directly)
-  echo " - secrets.yml file found in $BUILD_DIR/BOOT-INF/classes/secrets.yml copy to $BUILD_DIR/secrets.yml"
-  cp $BUILD_DIR/BOOT-INF/classes/secrets.yml $BUILD_DIR/secrets.yml
+  echo " - secrets.yml file found in ${BUILD_DIR}/BOOT-INF/classes/secrets.yml copy to ${BUILD_DIR}/secrets.yml"
+  cp "${BUILD_DIR}/BOOT-INF/classes/secrets.yml" "${BUILD_DIR}/secrets.yml"
 fi
 
 # Search for candidate `secrets.yml` paths and report them to the deploy output
-secrets_yaml="$(find $BUILD_DIR -name 'secrets.yml' -printf \"%P\\n\")"
-if [ -z "$secrets_yaml" ]; then
+secrets_yaml=$(find "${BUILD_DIR}" -name 'secrets.yml' -printf \"%P\\n\")
+if [ -z "${secrets_yaml}" ]; then
   echo " - Unable to find a secrets.yml...exiting"
   exit 1
 else
   echo " - secrets.yml file found at:"
-  echo $secrets_yaml
+  echo "${secrets_yaml}"
 fi
 
 # When used in CI pipelines, we want to be able to test the buildpack
 # without a Conjur Service Broker running
-if [[ "$CONJUR_BUILDPACK_BYPASS_SERVICE_CHECK" != "true" ]]; then
+if [[ "${CONJUR_BUILDPACK_BYPASS_SERVICE_CHECK}" != "true" ]]; then
   echo "[cyberark-conjur-buildpack]: looking for cyberark-conjur in VCAP_SERVICES"
-  if [[ false = $(echo $VCAP_SERVICES | jq 'has("cyberark-conjur")') ]]; then
+  if [[ false = $(echo "${VCAP_SERVICES}" | jq 'has("cyberark-conjur")') ]]; then
     echo " - No credentials for cyberark-conjur service found in VCAP_SERVICES... exit"
     exit 1
   else
@@ -55,43 +55,45 @@ if [[ "$CONJUR_BUILDPACK_BYPASS_SERVICE_CHECK" != "true" ]]; then
 fi
 
 # Build the conjur-env binary if it's not in the buildpack package
-CONJUR_ENV_PATH=${BUILDPACK_DIR}/vendor/conjur-env
+# This is important in particular for the online buildpack usage
+CONJUR_ENV_PATH="${BUILDPACK_DIR}/vendor/conjur-env"
 echo "[cyberark-conjur-buildpack]: looking for conjur-env binary at ${CONJUR_ENV_PATH}"
-if [ -f ${CONJUR_ENV_PATH} ]; then
+if [ -f "${CONJUR_ENV_PATH}" ]; then
   echo " - found it"
 else
   echo " - need to compile conjur-env"
   echo "[cyberark-conjur-buildpack]: install go to build conjur-env binary"
-  source "$BUILDPACK_DIR/lib/install_go.sh"
+  source $BUILDPACK_DIR/lib/install_go.sh
 
-  pushd  ${DEPS_DIR}/${INDEX_DIR}
-    cd ${BUILDPACK_DIR}/conjur-env
+  pushd "${DEPS_DIR}/${INDEX_DIR}"
+    cd "${BUILDPACK_DIR}/conjur-env"
 
     echo "[cyberark-conjur-buildpack]: download the conjur-env binary dependencies"
-    $GoInstallDir/bin/go mod download
+    "${GoInstallDir}"/bin/go mod download
 
     echo "[cyberark-conjur-buildpack]: building the conjur-env binary."
     GOOS=linux \
     GOARCH=amd64 \
     CGO_ENABLED=0 \
-    $GoInstallDir/bin/go build -o ${CONJUR_ENV_PATH} -a -ldflags '-extldflags "-static"' .
-    file ${CONJUR_ENV_PATH}
+    "${GoInstallDir}"/bin/go build -o "${CONJUR_ENV_PATH}" -a -ldflags '-extldflags "-static"' .
+    file "${CONJUR_ENV_PATH}"
   popd
 fi
 
 # Copy conjur-env into application dependencies
 echo "[cyberark-conjur-buildpack]: copy the conjur-env binary from the buildpack dir to the dependencies/index directory"
-mkdir -p ${DEPS_DIR}/${INDEX_DIR}/vendor/
-cp -v ${CONJUR_ENV_PATH} ${DEPS_DIR}/${INDEX_DIR}/vendor/conjur-env
+CONJUR_ENV_PATH="${BUILDPACK_DIR}/vendor/conjur-env"
+mkdir -p "${DEPS_DIR}/${INDEX_DIR}/vendor/"
+cp -v "${CONJUR_ENV_PATH}" "${DEPS_DIR}/${INDEX_DIR}/vendor/conjur-env"
 
-pushd ${DEPS_DIR}/${INDEX_DIR}
+pushd "${DEPS_DIR}/${INDEX_DIR}"
   # We add the lib/0001_retrieve-secrets.sh script to profile.d so that it will
   # be run automatically to retrieve secrets when the app starts.
 
   echo "[cyberark-conjur-buildpack]: setup the dependencies/index/profile.d script so the conjur app starts automatically"
   mkdir -p ./profile.d
-  cp ${BUILDPACK_DIR}/lib/0001_retrieve-secrets.sh ./profile.d/0001_retrieve-secrets.sh
-  sed "s/__BUILDPACK_INDEX__/$INDEX_DIR/g" ./profile.d/0001_retrieve-secrets.sh -i
+  cp "${BUILDPACK_DIR}/lib/0001_retrieve-secrets.sh" ./profile.d/0001_retrieve-secrets.sh
+  sed "s/__BUILDPACK_INDEX__/${INDEX_DIR}/g" ./profile.d/0001_retrieve-secrets.sh -i
 
   # Its Complicated :D
   # Buildpacks are in a huge state of flux. As of Spring 2019, buildpacks use the
@@ -111,7 +113,7 @@ pushd ${DEPS_DIR}/${INDEX_DIR}
   # but at this point, you don't have much of a choice, all all this gets fixed in the V3 versions.
 
   echo "[cyberark-conjur-buildpack]:  - because of missing feature in Java Buildpack, also copy to /home/vcap/app/.profile.d/"
-  mkdir -p $BUILD_DIR/.profile.d/
-  cp -v ./profile.d/0001_retrieve-secrets.sh $BUILD_DIR/.profile.d/
+  mkdir -p "${BUILD_DIR}/.profile.d/"
+  cp -v ./profile.d/0001_retrieve-secrets.sh "${BUILD_DIR}/.profile.d/"
 
 popd

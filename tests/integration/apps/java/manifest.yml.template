@@ -1,6 +1,7 @@
 applications:
 - name: java-app
   random-route: true
+  path: target/hello-0.1.0.jar
   env:
     CONJUR_BUILDPACK_BYPASS_SERVICE_CHECK: true
   memory: 1G

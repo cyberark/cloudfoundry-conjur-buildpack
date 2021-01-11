@@ -1,0 +1,35 @@
+#!/bin/bash -e
+
+#
+# Local Integration Test Runner
+#
+# This script will run all features marked with
+# `not @integration`, which avoids the usage of a live
+# remote PCF instance, or any needed credentials.
+#
+
+cd "$(dirname "$0")"
+# shellcheck disable=SC1091
+. ./utils
+trap finish EXIT
+
+setup_env
+build_test_images
+start_conjur
+
+# If we're running in Jenkins, skip this step since it's already been
+# run in the Jenkinsfile
+# It copies a packaged & unzipped buildpack into conjur_buildpack/
+[[ -z $JENKINS_HOME ]] && package_and_unpack_buildpack
+
+announce 'Running Cucumber tests...'
+docker-compose \
+    -f "$DOCKER_COMPOSE_FILE" \
+    run --rm \
+    -w "$CONTAINER_FEATURES_DIR" \
+    tester cucumber \
+    --publish-quiet \
+    --format pretty \
+    --format junit \
+    --out "./reports/integration" \
+    --tags 'not @integration'

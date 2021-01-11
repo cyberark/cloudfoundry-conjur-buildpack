@@ -1,10 +1,10 @@
-#!/bin/bash -x
+#!/bin/bash -e
 
 # Run conjur-env unit tests and scan with golint and vet
 # Output it placed in conjur-env/output
 
 docker run \
-  -v $(pwd)/conjur-env:/cyberark \
+  -v "$(pwd)/conjur-env:/cyberark" \
   -w /cyberark \
   --rm golang \
   sh -c '''

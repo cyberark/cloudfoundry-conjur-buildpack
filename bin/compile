@@ -1,5 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# bin/compile is currently required, even though it's deprecated. This is likely a bug.
+# This script is deprecated as a buildpack stage.
+# However, we keep it to preserve backwards compatability with
+# Heroku and older versions of CloudFoundry
+# See: https://docs.cloudfoundry.org/buildpacks/understand-buildpacks.html#buildpack-scripts
 
 exit

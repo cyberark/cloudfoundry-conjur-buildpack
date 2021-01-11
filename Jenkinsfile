@@ -13,19 +13,22 @@ pipeline {
   }
 
   stages {
-    stage('Validate') {
-      parallel {
-        stage('Changelog') {
-          steps { sh './bin/parse-changelog.sh' }
-        }
+    stage('Grant IP Access') {
+      steps {
+        // Grant access to this Jenkins agent's IP to AWS security groups
+        grantIPAccess()
       }
     }
-    
-    stage('Build buildpack') {
-      steps {
-        sh './package.sh'
 
-        archiveArtifacts artifacts: '*.zip', fingerprint: true
+    stage('Validate Changelog') {
+      steps {
+        sh './ci/parse-changelog.sh'
+      }
+    }
+
+    stage('Package') {
+      steps {
+        sh './package.sh && ./unpack.sh'
       }
     }
 
@@ -33,8 +36,15 @@ pipeline {
       parallel {
         stage('Integration Tests') {
           steps {
-            sh 'summon ./test.sh'
-            junit 'ci/features/reports/*.xml'
+            sh './ci/test_integration'
+            junit 'tests/integration/reports/integration/*.xml'
+          }
+        }
+
+        stage('End To End Tests') {
+          steps {
+            sh 'summon -f ./ci/secrets.yml ./ci/test_e2e'
+            junit 'tests/integration/reports/e2e/*.xml'
           }
         }
 
@@ -42,14 +52,14 @@ pipeline {
           stages {
             stage("Secret Retrieval Script Tests") {
               steps {
-                sh './ci/test-retrieve-secrets/start'
+                sh './tests/retrieve-secrets/start'
                 junit 'TestReport-test.xml'
               }
             }
 
             stage("Conjur-Env Unit Tests") {
               steps {
-                sh './ci/test-unit'
+                sh './ci/test_conjur-env'
                 junit 'conjur-env/output/*.xml'
               }
             }
@@ -62,6 +72,8 @@ pipeline {
   post {
     always {
       cleanupAndNotify(currentBuild.currentResult)
+      // Remove this Jenkins Agent's IP from AWS security groups
+      removeIPAccess()
     }
   }
 }

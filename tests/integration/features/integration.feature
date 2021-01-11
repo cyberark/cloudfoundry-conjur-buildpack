@@ -1,5 +1,5 @@
 @integration
-Feature: Integrations Tests for PCF 2.4
+Feature: Integrations Tests for remote TAS foundation
 
   These tests verify how the buildpack interacts with other
   final buildpacks. For the given language-specific final
@@ -15,23 +15,35 @@ Feature: Integrations Tests for PCF 2.4
       And I install the buildpack
 
     Scenario: Python offline buildpack integration
-      When I push a Python app with the offline buildpack
+      When I push a "python" app with the "offline" buildpack
       Then the secrets.yml values are available in the app
 
     Scenario: Ruby offline buildpack integration
-      When I push a Ruby app with the offline buildpack
+      When I push a "ruby" app with the "offline" buildpack
       Then the secrets.yml values are available in the app
 
     Scenario: PHP offline buildpack integration
-      When I push a PHP app with the offline buildpack
+      When I push a "php" app with the "offline" buildpack
       Then the secrets.yml values are available in the app
 
     Scenario: Java offline buildpack integration
-      When I push a Java app with the offline buildpack
+      When I push a "java" app with the "offline" buildpack
       Then the secrets.yml values are available in the app
 
 #    # The online buildpack tests are only valid if the latest commits
 #    # are push to the Github remote branch.
-#    Scenario: Java online buildpack integration
-#      When I push a Java app with the online buildpack
-#      Then the secrets.yml values are available in the app
+    Scenario: Python online buildpack integration
+      When I push a "python" app with the "online" buildpack
+      Then the secrets.yml values are available in the app
+
+    Scenario: Ruby online buildpack integration
+      When I push a "ruby" app with the "online" buildpack
+      Then the secrets.yml values are available in the app
+
+    Scenario: PHP online buildpack integration
+      When I push a "php" app with the "online" buildpack
+      Then the secrets.yml values are available in the app
+
+    Scenario: Java online buildpack integration
+      When I push a "java" app with the "online" buildpack
+      Then the secrets.yml values are available in the app

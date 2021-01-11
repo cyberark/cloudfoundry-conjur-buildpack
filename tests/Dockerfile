@@ -1,7 +1,7 @@
 FROM cloudfoundry/cflinuxfs3
 
-ENV WD_PATH="/conjurinc/cloudfoundry-conjur-buildpack" \
-    CI_PATH="/conjurinc/cloudfoundry-conjur-buildpack/ci"
+ENV WD_PATH="/cyberark/cloudfoundry-conjur-buildpack" \
+    TEST_PATH="/cyberark/cloudfoundry-conjur-buildpack/tests"
 
 WORKDIR "$WD_PATH"
 
@@ -20,13 +20,12 @@ RUN wget -q https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key &&
     apt-get install -y cf-cli
 
 # Install ruby dependencies
-RUN mkdir -p "$CI_PATH" && \
+RUN mkdir -p "$TEST_PATH" && \
     gem install bundler && \
     # This will prevent warnings about installing gems as root
     bundle config --global silence_root_warning 1
 
-COPY Gemfile \
-     Gemfile.lock "$CI_PATH"/
+COPY Gemfile "$TEST_PATH"
 
-RUN cd "$CI_PATH" && \
+RUN cd "$TEST_PATH" && \
     bundle install

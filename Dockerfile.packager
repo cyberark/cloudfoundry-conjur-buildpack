@@ -1,0 +1,5 @@
+FROM golang:latest
+
+RUN go get github.com/cloudfoundry/libbuildpack/packager/buildpack-packager
+
+RUN go install github.com/cloudfoundry/libbuildpack/packager/buildpack-packager
