@@ -6,14 +6,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.0] - 2020-03-01
+### Added
+- Support for using Summon environments in the `secrets.yml` file. Users can now
+  divide their secrets.yml files into environments and specify which
+  environment's secrets should be loaded at runtime using the new
+  `SECRETS_YAML_ENVIRONMENT` environment variable. See the
+  [README](https://github.com/cyberark/cloudfoundry-conjur-buildpack/#using-environments-in-your-secretsyml)
+  for more information.
+  [cyberark/cloudfoundry-conjur-buildpack#44](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/44)
+
+### Removed
+- Support for using the Buildpack with Conjur Enterprise v4. We recommend
+  users migrate to Dynamic Access Provider v11+ or Conjur OSS v1+.
+  [cyberark/cloudfoundry-conjur-buildpack#86](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/86)
+
 ## [2.1.6] - 2020-01-11
 ### Added
-- A [`manifest.yml`](./manifest.yml) has been added, allowing for
-  the usage of [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager)
-  and other native CloudFoundry features. Please refer
-  to [`manifest.yml`](./manifest.yml) for information on
-  dependencies and deprecation notices thereof, as well as a list
-  of files included in the Buildpack.
+- A [`manifest.yml`](https://github.com/cyberark/cloudfoundry-conjur-buildpack/tree/master/manifest.yml)
+  has been added, allowing for the usage of
+  [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager)
+  and other native CloudFoundry features. Please refer to
+  [`manifest.yml`](https://github.com/cyberark/cloudfoundry-conjur-buildpack/tree/master/manifest.yml)
+  for information on dependencies and deprecation notices thereof, as well as
+  a list of files included in the Buildpack.
   [cyberark/cloudfoundry-conjur-buildpack#79](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/79)
 
 ### Changed
@@ -37,13 +53,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   [cyberark/cloudfoundry-conjur-buildpack#73](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/73)
 
 ## [2.1.5] - 2020-11-06
-### Added
-- Added sanity tests and additional validation of environment variable keys specified
-  in the `secrets.yml` to ensure compatibility with Bash commands
 
 ### Security
-- Added custom handling to sanitize error messages related to retrieved secrets
-  being exported to the environment
+- Buildpack can no longer expose secret values when the secrets.yml includes an
+  [invalid variable name](https://github.com/cyberark/cloudfoundry-conjur-buildpack/#create-a-secretsyml-file).
+  [Security Advisory](https://github.com/cyberark/cloudfoundry-conjur-buildpack/security/advisories/GHSA-3gqg-6hwf-vq8x)
 
 ## [2.1.4] - 2020-07-16
 
@@ -125,7 +139,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.6...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.6...v2.2.0
 [2.1.6]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.5...v2.1.6
 [2.1.5]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.4...v2.1.5
 [2.1.4]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.3...v2.1.4

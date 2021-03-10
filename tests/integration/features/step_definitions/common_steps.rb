@@ -6,11 +6,11 @@ Given(/^the '([^"]*)' command is run$/) do |script_command|
   # all this fuss to use a bash shell as opposed to sh shell
 
   f = Tempfile.open('command.sh')
-  file_contents = <<EOS
-#!/bin/bash -e
-#{ @commands.join("\n") }
-#{ script_command }
-EOS
+  file_contents = <<~EOS
+    #!/bin/bash -e
+    #{@commands.join("\n")}
+    #{script_command}
+  EOS
   f.write(file_contents)
   f.close
 
@@ -23,13 +23,20 @@ EOS
 end
 
 Given(/^the supply script is run against the app's root folder$/) do
-  step "the following command is run:", <<EOS
-#{ENV['BUILDPACK_BUILD_DIR']}/bin/supply #{@BUILD_DIR} #{@CACHE_DIR} #{@DEPS_DIR} #{@INDEX_DIR}
-EOS
+  step 'the following command is run:', <<~SPL
+    #{ENV['BUILDPACK_BUILD_DIR']}/bin/supply #{@BUILD_DIR} #{@CACHE_DIR} #{@DEPS_DIR} #{@INDEX_DIR}
+  SPL
 end
 
 Given(/^the following command is run:$/) do |multiline_text|
   step "the '#{multiline_text}' command is run"
+end
+
+And(/^The SECRETS_YAML_ENVIRONMENT value is '([^"]*)'$/) do |val|
+  @commands ||= []
+  @commands << <<~ENV
+    export SECRETS_YAML_ENVIRONMENT='#{val}'
+  ENV
 end
 
 Then(/^the result should have a non\-zero exit status$/) do
@@ -46,54 +53,54 @@ end
 
 Given(/^VCAP_SERVICES contains cyberark\-conjur credentials$/) do
   @commands ||= []
-  @commands << <<eos
-export VCAP_SERVICES='
-{
- "cyberark-conjur": [{
-  "credentials": {
-   "appliance_url": "#{Conjur.configuration.appliance_url}",
-   "authn_api_key": "#{admin_api_key}",
-   "authn_login": "admin",
-   "account": "#{Conjur.configuration.account}",
-   "ssl_certificate": "",
-   "version": 5
-  }
- }],
- "some-other-service": [{
-   "credentials": {
-     "version": "1.0"
-   }
- }]
-}
-'
-eos
+  @commands << <<~VCP
+    export VCAP_SERVICES='
+    {
+     "cyberark-conjur": [{
+      "credentials": {
+       "appliance_url": "#{Conjur.configuration.appliance_url}",
+       "authn_api_key": "#{admin_api_key}",
+       "authn_login": "admin",
+       "account": "#{Conjur.configuration.account}",
+       "ssl_certificate": "",
+       "version": 5
+      }
+     }],
+     "some-other-service": [{
+       "credentials": {
+         "version": "1.0"
+       }
+     }]
+    }
+    '
+  VCP
 end
 
 Given(/^VCAP_SERVICES has a cyberark\-conjur key$/) do
   @commands ||= []
-  @commands << <<EOS
-export VCAP_SERVICES='
-{
- "cyberark-conjur": []
-}
-'
-EOS
+  @commands << <<~VCP
+    export VCAP_SERVICES='
+    {
+     "cyberark-conjur": []
+    }
+    '
+  VCP
 end
 
 Given(/^VCAP_SERVICES does not have a cyberark\-conjur key$/) do
   @commands ||= []
-  @commands << <<EOS
-export VCAP_SERVICES='
-{
-}
-'
-EOS
+  @commands << <<~VCP
+    export VCAP_SERVICES='
+    {
+    }
+    '
+  VCP
 end
 
 And(/^the build directory has a secrets\.yml file(?: at ["']([^'"]+)["'])?/) do |secrets_yaml_path|
-  secretsyml = <<EOS
-LITERAL_SECRET: a literal secret
-EOS
+  secretsyml = <<~SEC
+    LITERAL_SECRET: a literal secret
+  SEC
   secrets_yaml_path ||= 'secrets.yml'
   full_path = "#{@BUILD_DIR}/#{secrets_yaml_path}"
   FileUtils.mkdir_p(File.dirname(full_path))

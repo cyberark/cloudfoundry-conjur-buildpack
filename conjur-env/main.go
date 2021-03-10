@@ -111,9 +111,13 @@ func main() {
 	if !exists {
 		secretsYamlPath = "secrets.yml"
 	}
+	secretsEnv, exists := os.LookupEnv("SECRETS_YAML_ENVIRONMENT")
+	if !exists {
+		secretsEnv = ""
+	}
 
 	// Parse the secrets YAML file.
-	secrets, err := parseSecretsYamlFile(secretsYamlPath)
+	secrets, err := parseSecretsYamlFile(secretsYamlPath, secretsEnv)
 	printAndExitIfError(err)
 
 	// Confirm that environment variable names parsed from the secrets YAML
@@ -136,8 +140,8 @@ func main() {
 // parseSecretsYamlFile parses a secrets YAML file at a specified path
 // and returns an error if either the file doesn't exist or it contains
 // invalid secrets YAML syntax.
-func parseSecretsYamlFile(secretsYamlPath string) (secretsyml.SecretsMap, error) {
-	secrets, err := secretsyml.ParseFromFile(secretsYamlPath, "", nil)
+func parseSecretsYamlFile(secretsYamlPath string, env string) (secretsyml.SecretsMap, error) {
+	secrets, err := secretsyml.ParseFromFile(secretsYamlPath, env, nil)
 	if os.IsNotExist(err) {
 		err = fmt.Errorf("error: %s not found", secretsYamlPath)
 	}

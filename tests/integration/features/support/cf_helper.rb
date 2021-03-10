@@ -28,7 +28,7 @@ module CfHelper
 
     res.body.strip
   end
-  
+
   def login_to_pcf
     api_endpoint = ENV['CF_API_ENDPOINT']
 

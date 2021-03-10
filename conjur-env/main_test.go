@@ -17,6 +17,16 @@ SOME_VAR: !var prod/user/robot/api_key
 SOME_VAR_FILE: !var:file prod/user/robot/private_key
 SOME_LOCAL_FILE: !file my-local-file`
 
+	validSecretsYamlWithEnv = `
+common:
+  COMMON_VAR: common_secret
+
+wanted:
+  SOME_VAR: !var prod/user/robot/api_key
+
+unwanted:
+  SOME_VAR: !var prod/user/robot/my_secret`
+
 	invalidSecretsYaml = `
 SOME_VAR: !var prod/user/robot/api_key
 OOPS_NO_COLON !var prod/user/robot/my_secret`
@@ -40,6 +50,17 @@ var (
 		"SOME_LOCAL_FILE": {
 			Tags: []secretsyml.YamlTag{secretsyml.File},
 			Path: "my-local-file",
+		},
+	}
+
+	validSecretsFromWantedEnv = secretsyml.SecretsMap{
+		"COMMON_VAR": {
+			Tags: []secretsyml.YamlTag{secretsyml.Literal},
+			Path: "common_secret",
+		},
+		"SOME_VAR": {
+			Tags: []secretsyml.YamlTag{secretsyml.Var},
+			Path: "prod/user/robot/api_key",
 		},
 	}
 
@@ -104,18 +125,32 @@ func createSecretsYamlFile(yamlData string) string {
 func TestParseSecretsYamlFile(t *testing.T) {
 	testCases := []struct {
 		description string
+		env         string
 		yamlData    string
 		expectedMap secretsyml.SecretsMap
 		expectError bool
 	}{
 		{
 			description: "Processes a valid secrets YAML file",
+			env:         "",
 			yamlData:    validSecretsYaml,
 			expectedMap: validSecretsMap,
 			expectError: false,
 		}, {
 			description: "Errors on an invalid secrets YAML file",
+			env:         "",
 			yamlData:    invalidSecretsYaml,
+			expectError: true,
+		}, {
+			description: "Uses the specified secrets environment",
+			env:         "wanted",
+			yamlData:    validSecretsYamlWithEnv,
+			expectedMap: validSecretsFromWantedEnv,
+			expectError: false,
+		}, {
+			description: "Throws an error when env is invalid",
+			env:         "doesnt.exist",
+			yamlData:    validSecretsYamlWithEnv,
 			expectError: true,
 		},
 	}
@@ -127,7 +162,7 @@ func TestParseSecretsYamlFile(t *testing.T) {
 			defer os.Remove(file)
 
 			// Parse the secrets.yml file
-			secrets, err := parseSecretsYamlFile(file)
+			secrets, err := parseSecretsYamlFile(file, tc.env)
 
 			// Check for error if expected
 			if tc.expectError {

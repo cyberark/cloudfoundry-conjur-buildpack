@@ -46,3 +46,44 @@ Feature: profile d script
     second line
 
     """
+
+  @BUILD_DIR
+  Scenario: Populates only the secrets for a given Summon environment
+    Given the build directory has a secrets.yml file
+    And VCAP_SERVICES contains cyberark-conjur credentials
+    And the supply script is run against the app's root folder
+    And conjur-env is installed
+    And a root policy:
+    """
+    - !variable conjur_single_line_secret_id
+    """
+    And the 'conjur_single_line_secret_id' variable has a secret value
+    """
+    single line
+    """
+    And VCAP_SERVICES contains cyberark-conjur credentials
+    And the build directory has this secrets.yml file
+    """
+    common:
+        LITERAL_SECRET: some literal secret
+
+    dev:
+        CONJUR_SINGLE_LINE_SECRET: !var conjur_single_line_secret_id
+
+    prod:
+        CONJUR_SINGLE_LINE_SECRET: production_secret
+    """
+    And The SECRETS_YAML_ENVIRONMENT value is 'dev'
+    When the retrieve secrets profile.d script is sourced
+    And the 'env' command is run
+    Then the environment contains
+    """
+    LITERAL_SECRET=some literal secret
+
+    """
+
+    And the environment contains
+    """
+    CONJUR_SINGLE_LINE_SECRET=single line
+
+    """
