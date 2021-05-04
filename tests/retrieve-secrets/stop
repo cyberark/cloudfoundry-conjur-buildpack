@@ -3,6 +3,7 @@
 function finish {
   echo 'Removing environment...'
 
+  rm -rf temp_clone_dir
   docker-compose down -v
 }
 

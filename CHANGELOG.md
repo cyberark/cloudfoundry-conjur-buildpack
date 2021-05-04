@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Fixed scrambled error messages (e.g. with invalid line numbers) that were
+  generated whenever the Cloudfoundry Buildpack encountered errors while
+  parsing environment variable settings after retrieving secrets variables
+  from Conjur.
+  [cyberark/cloudfoundry-conjur-buildpack#120](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/120)
+
 ## [2.2.0] - 2020-03-01
 ### Added
 - Support for using Summon environments in the `secrets.yml` file. Users can now

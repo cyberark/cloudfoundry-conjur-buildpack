@@ -12,7 +12,7 @@ echo "[cyberark-conjur-buildpack]: retrieving & injecting secrets"
 err_report() {
     local previous_exit=$?
     trap - ERR
-    printf "%s: Error on line %s" "${BASH_SOURCE[@]}" "$1" 1>&2
+    printf "%s: Error on line %s" "${BASH_SOURCE[0]}" "$1" 1>&2
     exit ${previous_exit}
 }
 trap 'err_report $LINENO' ERR
@@ -26,7 +26,7 @@ trap 'rm -f "$temp_err_file"' EXIT
 conjur_env_err() {
     local previous_exit=$?
     trap - ERR
-    printf "%s: Error on line %s: $(<"$temp_err_file")" "${BASH_SOURCE[@]}" "$1"
+    printf "%s: Error on line %s: $(<"$temp_err_file")" "${BASH_SOURCE[0]}" "$1"
     exit ${previous_exit}
 }
 
@@ -36,7 +36,7 @@ conjur_env_err() {
 export_err() {
     local previous_exit=$?
     trap - ERR
-    printf "%s: Error on line %s: Unable to export \`%s\`; value may not be a valid identifier" "${BASH_SOURCE[@]}" "$1" "$2"
+    printf "%s: Error on line %s: Unable to export \`%s\`; value may not be a valid identifier" "${BASH_SOURCE[0]}" "$1" "$2"
     exit ${previous_exit}
 }
 
