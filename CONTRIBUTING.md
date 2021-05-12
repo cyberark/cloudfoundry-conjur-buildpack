@@ -195,8 +195,8 @@ integration tests on a remote PCF environment, run:
    on how to set this up. `vx.y.z` is an acceptable tag message.
 1. Push the tag: `git push vx.y.z` (or `git push origin vx.y.z` if you are working
    from your local machine).
-1. From a **clean checkout of master** run `./package.sh` to generate the
-   release ZIP. Upload this ZIP file to the GitHub release.
+1. Retrieve the archived release ZIP from the Jenkins build. Upload this ZIP
+   file to the GitHub release.
 
    **IMPORTANT** Do not upload any artifacts besides the ZIP to the GitHub
    release. At this time, the tile build assumes the project ZIP is the only

@@ -29,6 +29,7 @@ pipeline {
     stage('Package') {
       steps {
         sh './package.sh && ./unpack.sh'
+        archiveArtifacts('conjur_buildpack*.zip')
       }
     }
 
