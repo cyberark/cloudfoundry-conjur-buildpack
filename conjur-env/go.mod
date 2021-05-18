@@ -7,6 +7,7 @@ require (
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
 	github.com/sirupsen/logrus v1.8.0 // indirect
 	github.com/stretchr/testify v1.2.2
+	golang.org/x/crypto v0.0.0-20201216223049-8b5274cf687f // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
 	golang.org/x/tools v0.1.1 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
