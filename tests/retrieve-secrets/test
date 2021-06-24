@@ -97,6 +97,9 @@ source_test_file() {
   assert_failure
   assert_output -p '`BAD.VAR`; value may not be a valid identifier'
 
+  # Output should not contain an invalid line number
+  refute_output --regexp 'Error on line .*[^0-9].*: Unable to export'
+
   # We should exit after the first error, so these variables shouldn't be present
   refute_output -p '2BADVAR'
   refute_output -p '1234'

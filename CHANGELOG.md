@@ -6,12 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.1] - 2020-06-24
+### Fixed
+- Fixed scrambled error messages (e.g. with invalid line numbers) that were
+  generated whenever the Cloudfoundry Buildpack encountered errors while
+  parsing environment variable settings after retrieving secrets variables
+  from Conjur.
+  [cyberark/cloudfoundry-conjur-buildpack#120](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/120)
+
 ## [2.2.0] - 2020-03-01
 ### Added
 - Support for using Summon environments in the `secrets.yml` file. Users can now
-  divide their secrets.yml files into environments and specify which
-  environment's secrets should be loaded at runtime using the new
-  `SECRETS_YAML_ENVIRONMENT` environment variable. See the
+  divide their secrets.yml files into sections for each environment and specify
+  the secrets to load at runtime using the new `SECRETS_YAML_ENVIRONMENT`
+  environment variable. See the
   [README](https://github.com/cyberark/cloudfoundry-conjur-buildpack/#using-environments-in-your-secretsyml)
   for more information.
   [cyberark/cloudfoundry-conjur-buildpack#44](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/44)
@@ -139,7 +147,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.6...v2.2.0
 [2.1.6]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.5...v2.1.6
 [2.1.5]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.4...v2.1.5
