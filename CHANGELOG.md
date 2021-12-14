@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Security
+- Updated golang.org/x/net to v0.0.0-20211209124913-491a49abca63
+  [cyberark/cloudfoundry-conjur-buildpack#130](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/130)
 
 ## [2.2.1] - 2020-06-24
 ### Fixed
