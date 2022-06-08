@@ -6,6 +6,7 @@ pipeline {
   options {
     timestamps()
     buildDiscarder(logRotator(numToKeepStr: '30'))
+    lock resource: "tas-infra"
   }
 
   triggers {
@@ -44,8 +45,14 @@ pipeline {
 
         stage('End To End Tests') {
           steps {
+            allocateTas()
             sh 'summon -f ./ci/secrets.yml ./ci/test_e2e'
             junit 'tests/integration/reports/e2e/*.xml'
+          }
+          post {
+            always {
+              destroyTas()
+            }
           }
         }
 
@@ -73,8 +80,6 @@ pipeline {
   post {
     always {
       cleanupAndNotify(currentBuild.currentResult)
-      // Remove this Jenkins Agent's IP from AWS security groups
-      removeIPAccess()
     }
   }
 }

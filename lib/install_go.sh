@@ -5,10 +5,10 @@
 
 set -euo pipefail
 
-GO_VERSION="1.14"
+GO_VERSION="1.17.9"
 
 if [ "${CF_STACK}" == "cflinuxfs3" ]; then
-    GO_SHA256="7791b658b10dba530754c9dbdf52dcdec03b77c250ee44701a6120580feb5038"
+    GO_SHA256="a620909b3dc54e17a7769dbcb95bc9fbac60dd376c730b09afaee984d4d7da91"
 else
   echo "       **ERROR** Unsupported stack"
   echo "                 See https://docs.cloudfoundry.org/devguide/deploy-apps/stacks.html for more info"
@@ -19,7 +19,7 @@ export GoInstallDir="/tmp/go${GO_VERSION}"
 mkdir -p "${GoInstallDir}"
 
 if [ ! -f "${GoInstallDir}/go/bin/go" ]; then
-  URL="https://buildpacks.cloudfoundry.org/dependencies/go/go${GO_VERSION}.linux-amd64-${CF_STACK}-${GO_SHA256:0:8}.tgz"
+  URL="https://buildpacks.cloudfoundry.org/dependencies/go/go_${GO_VERSION}_linux_x64_${CF_STACK}_${GO_SHA256:0:8}.tgz"
 
   echo "-----> Download go ${GO_VERSION}"
   curl -s -L --retry 15 --retry-delay 2 "${URL}" -o /tmp/go.tar.gz

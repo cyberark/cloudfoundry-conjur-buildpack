@@ -1,4 +1,4 @@
-FROM golang:1.14-stretch
+FROM golang:1.17.9-stretch
 MAINTAINER CyberArk Software, Inc.
 
 ENV GOOS=linux \

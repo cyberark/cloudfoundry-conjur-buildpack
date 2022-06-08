@@ -7,16 +7,17 @@ docker run \
   -v "$(pwd)/conjur-env:/cyberark" \
   -w /cyberark \
   --rm golang \
-  sh -c '''
+  bash -c '''
+  set -euo pipefail
   # Run golint
-  go get -u golang.org/x/lint/golint
+  go install golang.org/x/lint/golint@latest
   golint -set_exit_status ./...
 
   # Run go vet
   go vet ./...
 
   # Run unit test with coverage
-  go get -u github.com/jstemmer/go-junit-report
+  go install github.com/jstemmer/go-junit-report@latest
   mkdir -p output
   go test -coverprofile=output/c.out -v . | tee /dev/stderr | go-junit-report > output/junit.xml
   '''

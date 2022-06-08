@@ -1,12 +1,11 @@
 #!/bin/bash -e
 
-cd "$(dirname "$0")"
 # shellcheck disable=SC1091
-. ./utils
+. ci/utils
 
 announce 'Running Golint and Vet against the Conjur-Env...'
 # Unit Test Runner
-./test_conjur-env
+./ci/test_conjur-env
 
 announce 'Running unit tests for the secrets retrieval script...'
-../tests/retrieve-secrets/start
+tests/retrieve-secrets/start

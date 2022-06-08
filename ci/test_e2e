@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-#
 # Remote Integration Test Runner
 #
 # This runs only e2e features, which are those dependent on
@@ -9,13 +8,32 @@
 # proper summon credentials.
 #
 
-# First, check for summon variables
-: "${CF_API_ENDPOINT?"Error: Need to set CF_API_ENDPOINT"}"
-
 cd "$(dirname "$0")"
 # shellcheck disable=SC1091
 . ./utils
-trap finish EXIT
+
+function cleanup(){
+  if [[ -z "${compute_ip:-}" ]]; then
+    ipmanager remove "${compute_ip}" || true
+  fi
+  finish
+}
+trap cleanup EXIT
+
+# Allow hammerfile path to be overidden, but default to hammerfile.json
+# in the root of the repo.
+HAMMERFILE_DEFAULT="$(git rev-parse --show-toplevel)/hammerfile.json"
+export HAMMERFILE="${HAMMERFILE:-"${HAMMERFILE_DEFAULT}"}"
+
+if [[ -r "${HAMMERFILE}" ]]; then
+  getISVCFCreds
+  addComputeIPToIPManager || { sleep 30; addComputeIPToIPManager; }
+else
+  echo "Hammerfile not detected"
+fi
+
+# First, check for summon variables
+: "${CF_API_ENDPOINT?"Error: Need to set CF_API_ENDPOINT"}"
 
 setup_env
 build_test_images

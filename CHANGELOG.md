@@ -6,6 +6,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.3] - 2022-06-07
+
+### Changed
+- Project Go version bumped to 1.17, and support for deprecated Go versions
+  1.14.x and 1.15.x removed.
+  [cyberark/cloudfoundry-conjur-buildpack#137](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/137)
+- Updated conjur-api-go to version 0.10.0
+  [cyberark/cloudfoundry-conjur-buildpack#140](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/140)
+
+### Security
+- Updated sinatra in ruby test app to 2.2.0
+  [cyberark/cloudfoundry-conjur-buildpack#135](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/135)
+- Golang-based Docker images bumped to version `1.17.9-stretch`
+  [cyberark/cloudfoundry-conjur-buildpack#137](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/137)
+
+## [2.2.2] - 2022-01-03
+### Changed
+- Updated conjur-api-go to version 0.8.1
+  [cyberark/cloudfoundry-conjur-buildpack#131](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/131)
+
 ## [2.2.1] - 2020-06-24
 ### Fixed
 - Fixed scrambled error messages (e.g. with invalid line numbers) that were
@@ -147,7 +167,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.1...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.3...HEAD
+[2.2.3]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.2...v2.2.3
+[2.2.2]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.1...v2.2.2
 [2.2.1]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.6...v2.2.0
 [2.1.6]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.5...v2.1.6
