@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Upgrade sinatra to 2.2.3 in /tests/integration/apps/ruby to resolve CVE-2022-45442
   [cyberark/cloudfoundry-conjur-buildpack](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/159)
 
+## [2.2.7] - 2022-12-21
+### Changed
+- Updated a test/Dockerfile with latest ruby version 3.0
+
 ## [2.2.6] - 2022-11-23
 ### Changed
 - Added replace statement to prune gopkg.in/yaml.v2 v2.2.2 in favor of v2.2.8

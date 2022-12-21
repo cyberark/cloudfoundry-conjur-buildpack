@@ -1,4 +1,4 @@
-FROM cloudfoundry/cflinuxfs3
+FROM cloudfoundry/cflinuxfs4
 
 ENV WD_PATH="/cyberark/cloudfoundry-conjur-buildpack" \
     TEST_PATH="/cyberark/cloudfoundry-conjur-buildpack/tests"
@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get install -y apt-transport-https \
                        ca-certificates \
                        openssl \
-                       ruby2.5-dev
+                       ruby3.0-dev
 
 # Install the Cloud Foundry CLI
 RUN wget -q https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key && \
