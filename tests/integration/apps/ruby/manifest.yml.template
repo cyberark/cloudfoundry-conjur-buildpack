@@ -5,4 +5,4 @@ applications:
     CONJUR_BUILDPACK_BYPASS_SERVICE_CHECK: true
   buildpacks:
   - {conjur_buildpack}
-  - https://github.com/cloudfoundry/ruby-buildpack.git#v1.9.0
+  - ruby_buildpack
