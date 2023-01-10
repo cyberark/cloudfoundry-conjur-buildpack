@@ -8,7 +8,7 @@ trap finish EXIT
 build_test_images
 start_conjur
 
-# Runs the cflinux3 image in interactive mode with the project files mounted
+# Runs the cflinux4 image in interactive mode with the project files mounted
 docker-compose \
   -f "$DOCKER_COMPOSE_FILE" \
   run --rm \
