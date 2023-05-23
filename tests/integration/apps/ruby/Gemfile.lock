@@ -52,11 +52,8 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     ruby2_keywords (0.0.5)
-    sinatra (3.0.5)
-      mustermann (~> 3.0)
+    roda (3.68.0)
       rack (~> 3.0.1)
-      rack-protection (= 3.0.5)
-      tilt (~> 2.0)
     table_print (1.5.7)
     thin (1.8.1)
       daemons (~> 1.0, >= 1.0.9)
@@ -78,7 +75,7 @@ DEPENDENCIES
   conjur-api
   conjur-cli
   rack (>= 3.0.1)
-  sinatra (>= 2.2.0)
+  roda (>= 3.68.0)
   thin
 
 RUBY VERSION
