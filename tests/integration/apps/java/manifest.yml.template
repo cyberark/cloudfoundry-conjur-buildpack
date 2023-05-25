@@ -4,6 +4,8 @@ applications:
   path: target/hello-0.1.0.jar
   env:
     CONJUR_BUILDPACK_BYPASS_SERVICE_CHECK: true
+    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.0.7_7 }}'
   memory: 1G
   buildpacks:
     - {conjur_buildpack}
