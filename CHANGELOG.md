@@ -6,8 +6,59 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [2.2.3] - 2022-06-07
+## [2.3.0] - 2023-10-06
+### Added
+- Support for TAS 4.0 and 5.0, and associated `cflinuxfs4` stack.
+  [cyberark/cloudfoundry-conjur-buildpack#178](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/178)
 
+### Changed
+- Project Go version bumped to 1.20, and support for deprecated Go version 1.17 removed.
+  [cyberark/cloudfoundry-conjur-buildpack#178](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/178)
+
+## [2.2.8] - 2023-06-21
+### Security
+- Upgrade golang.org/x/net to v0.10.0, golang.org/x/text to v0.9.0, golang.org/x/sys to v0.8.0, rack to 3.0.1,
+  spring-boot to 3.0.6, and java to 17
+  [cyberark/cloudfoundry-conjur-buildpack#172](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/172)
+- Update ruby in ci/parse-changelog.sh from 2.5 to 3.1
+  [cyberark/cloudfoundry-conjur-buildpack#170](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/170)
+
+## [2.2.7] - 2023-03-02
+### Security
+- Upgdate spring-boot and Golang dependencies. Upgrade test app to Ruby 3 and update ruby dependencies.
+  [cyberark/cloudfoundry-conjur-buildpack#164](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/164)
+- Upgrade sinatra to 2.2.3 in /tests/integration/apps/ruby to resolve CVE-2022-45442
+  [cyberark/cloudfoundry-conjur-buildpack#159](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/159)
+
+## [2.2.6] - 2022-11-23
+### Changed
+- Added replace statement to prune gopkg.in/yaml.v2 v2.2.2 in favor of v2.2.8
+  [cyberark/cloudfoundry-conjur-buildpack#153](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/153)
+- Added replace statement to prune gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c from
+  dependency tree in favor of v3.0.1 [cyberark/cloudfoundry-conjur-buildpack#152](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/152)
+
+### Security
+- Updated Summon, golang.org/x/net, and golang.org/x/text dependencies
+  [cyberark/cloudfoundry-conjur-buildpack#156](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/156)
+- Updated tests/integration/apps/java to use Spring Framework 2.7.5
+  [cyberark/cloudfoundry-conjur-buildpack#155](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/155)
+
+## [2.2.5] - 2022-09-07
+### Changed
+- Updated conjur-env dependencies to latest versions (github.com/cyberark/summon -> v0.9.4,
+  github.com/stretchr/testify -> v1.8.0) [cyberark/cloudfoundry-conjur-buildpack#149](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/149)
+
+## [2.2.4] - 2022-06-16
+### Changed
+- Updated conjur-api-go to 0.10.1 and summon to 0.9.3 in conjur-env/go.mod
+  [cyberark/cloudfoundry-conjur-buildpack#145](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/145)
+- Updated Spring in tests/integration/apps/java to 2.7.0
+  [cyberark/cloudfoundry-conjur-buildpack#144](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/144)
+- Updated conjur-env dependencies to latest versions (github.com/cyberark/summon -> v0.9.2,
+  github.com/stretchr/testify -> v1.7.2)
+  [cyberark/cloudfoundry-conjur-buildpack#143](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/143)
+
+## [2.2.3] - 2022-06-07
 ### Changed
 - Project Go version bumped to 1.17, and support for deprecated Go versions
   1.14.x and 1.15.x removed.
@@ -167,7 +218,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.3...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.8...v2.3.0
+[2.2.8]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.7...v2.2.8
+[2.2.7]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.6...v2.2.7
+[2.2.6]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.5...v2.2.6
+[2.2.5]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.4...v2.2.5
+[2.2.4]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.3...v2.2.4
 [2.2.3]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.2...v2.2.3
 [2.2.2]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.1...v2.2.2
 [2.2.1]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.0...v2.2.1

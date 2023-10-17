@@ -153,7 +153,7 @@ applications:
   - conjur
   buildpacks:
   - conjur_buildpack
-  - php_buildpack
+  - ruby_buildpack
   env:
     SECRETS_YAML_PATH: lib/secrets.yml
 ```
@@ -202,7 +202,7 @@ applications:
   - conjur
   buildpacks:
   - conjur_buildpack
-  - php_buildpack
+  - ruby_buildpack
   env:
     SECRETS_YAML_PATH: lib/secrets.yml
     SECRETS_YAML_ENVIRONMENT: staging

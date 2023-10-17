@@ -10,23 +10,23 @@ of the license associated with each component.
 
 SECTION 1: Apache License 2.0
 
->>> github.com/cyberark/conjur-api-go-0.10.0
+>>> github.com/cyberark/conjur-api-go-0.11.0
 >>> gopkg.in/yaml.v2-2.4.0
->>> gopkg.in/yaml.v3-3.0.0-20210107192922-496545a6307b
+>>> gopkg.in/yaml.v3-3.0.1
 
 SECTION 2: BSD 3-clause "New" or "Revised" License
 
 >>> github.com/pmezard/go-difflib-1.0.0
->>> golang.org/x/sys-0.0.0-20211216021012-1d35b9e2eb4e
+>>> golang.org/x/sys-0.8.0
 
 SECTION 3: MIT License
 
 >>> github.com/bgentry/go-netrc-0.0.0-20140422174119-9fd32a8b3d3d
->>> github.com/cyberark/summon-0.9.1
+>>> github.com/cyberark/summon-0.9.5
 >>> github.com/sirupsen/logrus-1.8.1
->>> github.com/stretchr/testify v1.7.0
+>>> github.com/stretchr/testify v1.8.0
 >>> gopkg.in/yaml.v2-2.4.0
->>> gopkg.in/yaml.v3-3.0.0-20210107192922-496545a6307b
+>>> gopkg.in/yaml.v3-3.0.1
 
 SECTION 4: ISC License
 
@@ -47,7 +47,7 @@ APPENDIX: Standard License Files and Templates
 
 Apache License 2.0 is applicable to the following component(s).
 
->>> github.com/cyberark/conjur-api-go-0.10.0
+>>> github.com/cyberark/conjur-api-go-0.11.0
 
 Copyright 2020 CyberArk Software Ltd.
 
@@ -85,7 +85,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
->>> gopkg.in/yaml.v3-3.0.0-20210107192922-496545a6307b
+>>> gopkg.in/yaml.v3-3.0.1
 
 ### Apache License ###
 
@@ -110,7 +110,7 @@ limitations under the License.
 
 BSD 3-clause "New" or "Revised" License is applicable to the following component(s).
 
->>> golang.org/x/sys-0.0.0-20211216021012-1d35b9e2eb4e
+>>> golang.org/x/sys-0.8.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -198,7 +198,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
->>> github.com/cyberark/summon-0.9.1
+>>> github.com/cyberark/summon-0.9.5
 
 The MIT License (MIT)
 
@@ -246,7 +246,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
->>> github.com/stretchr/testify v1.7.0
+>>> github.com/stretchr/testify v1.8.0
 
 Copyright (c) 2012-2020 Mat Ryer, Tyler Bunnell and contributors.
 
@@ -300,7 +300,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
->>> gopkg.in/yaml.v3-3.0.0-20210107192922-496545a6307b
+>>> gopkg.in/yaml.v3-3.0.1
 
 #### MIT License ####
 

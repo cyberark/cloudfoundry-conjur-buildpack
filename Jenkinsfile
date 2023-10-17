@@ -23,7 +23,7 @@ pipeline {
 
     stage('Validate Changelog') {
       steps {
-        sh './ci/parse-changelog.sh'
+        parseChangelog()
       }
     }
 
@@ -45,7 +45,7 @@ pipeline {
 
         stage('End To End Tests') {
           steps {
-            allocateTas()
+            allocateTas('isv_ci_tas_srt_5_0')
             sh 'summon -f ./ci/secrets.yml ./ci/test_e2e'
             junit 'tests/integration/reports/e2e/*.xml'
           }

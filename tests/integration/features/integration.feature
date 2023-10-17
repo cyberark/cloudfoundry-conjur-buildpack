@@ -22,10 +22,6 @@ Feature: Integrations Tests for remote TAS foundation
       When I push a "ruby" app with the "offline" buildpack
       Then the secrets.yml values are available in the app
 
-    Scenario: PHP offline buildpack integration
-      When I push a "php" app with the "offline" buildpack
-      Then the secrets.yml values are available in the app
-
     Scenario: Java offline buildpack integration
       When I push a "java" app with the "offline" buildpack
       Then the secrets.yml values are available in the app
@@ -38,10 +34,6 @@ Feature: Integrations Tests for remote TAS foundation
 
     Scenario: Ruby online buildpack integration
       When I push a "ruby" app with the "online" buildpack
-      Then the secrets.yml values are available in the app
-
-    Scenario: PHP online buildpack integration
-      When I push a "php" app with the "online" buildpack
       Then the secrets.yml values are available in the app
 
     Scenario: Java online buildpack integration

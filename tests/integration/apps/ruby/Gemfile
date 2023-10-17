@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '~> 2.5'
+ruby '~> 3.2'
 
-gem 'sinatra', ">= 2.2.0"
-gem 'rack', ">= 2.0.6"
 
 gem 'conjur-api'
 gem 'conjur-cli'
+gem 'thin'
+gem 'roda'

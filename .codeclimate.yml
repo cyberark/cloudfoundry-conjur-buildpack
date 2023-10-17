@@ -102,25 +102,6 @@ plugins:
   # ACTION uncomment eslint below if JavaScript already exists and .eslintrc
   # file exists in repo
 
-  # PHP
-  phan:
-    enabled: true
-    config:
-      file_extensions: "php"
-  phpcodesniffer:
-    enabled: true
-    config:
-      file_extensions: "php,inc,lib"
-      # Using Wordpress standards as our one PHP repo is a Wordpress theme
-      standards: "PSR1,PSR2,WordPress,WordPress-Core,WordPress-Extra"
-  phpmd:
-    enabled: true
-    config:
-      file_extensions: "php,inc,lib"
-      rulesets: "cleancode,codesize,controversial,naming,unusedcode"
-  sonar-php:
-    enabled: true
-
   # Python
   bandit:
     enabled: true
