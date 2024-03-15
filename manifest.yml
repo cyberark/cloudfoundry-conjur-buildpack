@@ -52,8 +52,12 @@ include_files:
 - VERSION
 - bin/compile
 - bin/supply
+- bin/supply.bat
+- bin/supply.ps1
 - lib/0001_retrieve-secrets.sh
+- lib/0001_retrieve-secrets.bat
 - lib/install_go.sh
 - vendor/conjur-env
+- vendor/conjur-win-env.exe
 - manifest.yml
 language: conjur # used solely to name the .zip

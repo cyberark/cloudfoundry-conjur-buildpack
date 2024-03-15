@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.4.0] - 2024-05-17
 
+### Added
+- Support for Windows TAS envrionments.
+  [cyberark/cloudfoundry-conjur-buildpack#184](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/184)
+
 ### Changed
 - Project Go version bumped to 1.22, and support for deprecated Go version 1.20 removed.
   [cyberark/cloudfoundry-conjur-buildpack#183](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/183)
