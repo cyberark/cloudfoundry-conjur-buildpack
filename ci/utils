@@ -13,7 +13,7 @@ function announce {
 
 function finish {
   announce 'Removing environment...'
-  docker-compose -f "$DOCKER_COMPOSE_FILE" down -v
+  docker compose -f "$DOCKER_COMPOSE_FILE" down -v
 }
 
 function package_and_unpack_buildpack {
@@ -36,14 +36,14 @@ function setup_env {
 
 function build_test_images {
   announce 'Building test images...'
-  docker-compose -f "$DOCKER_COMPOSE_FILE" build
+  docker compose -f "$DOCKER_COMPOSE_FILE" build
 }
 
 function start_conjur {
   announce 'Waiting for Conjur to start...'
-  docker-compose -f "$DOCKER_COMPOSE_FILE" up -d conjur
+  docker compose -f "$DOCKER_COMPOSE_FILE" up -d conjur
 
-  docker-compose -f "$DOCKER_COMPOSE_FILE" exec -T conjur conjurctl wait -r 45 -p 80
+  docker compose -f "$DOCKER_COMPOSE_FILE" exec -T conjur conjurctl wait -r 45 -p 80
 }
 
 

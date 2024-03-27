@@ -24,7 +24,7 @@ When('I push a {string} app with the {string} buildpack') do |language, buildpac
     else
       create_offline_app_manifest
     end
-    ShellSession.execute("cf push #{@app_name} --random-route")
+    ShellSession.execute("cf push #{@app_name} --random-route; cf logs #{@app_name}")
   end
 end
 

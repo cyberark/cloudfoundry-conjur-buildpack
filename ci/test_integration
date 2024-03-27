@@ -23,7 +23,7 @@ start_conjur
 [[ -z $JENKINS_HOME ]] && package_and_unpack_buildpack
 
 announce 'Running Cucumber tests...'
-docker-compose \
+docker compose \
     -f "$DOCKER_COMPOSE_FILE" \
     run --rm \
     -w "$CONTAINER_FEATURES_DIR" \

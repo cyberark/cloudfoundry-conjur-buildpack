@@ -1,7 +1,7 @@
-version: '2.1'
 services:
   conjur-env-builder:
-    build: ""
+    build: 
+      context: .
     volumes:
       - .:/conjur-env
       - ../vendor:/pkg

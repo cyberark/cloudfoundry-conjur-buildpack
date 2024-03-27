@@ -10,13 +10,13 @@ mkdir -p temp_clone_dir
 git clone https://github.com/ztombol/bats-support temp_clone_dir/bats-support
 git clone https://github.com/ztombol/bats-assert temp_clone_dir/bats-assert
 
-docker-compose build
-docker-compose run --rm mock-conjur-env-builder
+docker compose build
+docker compose run --rm mock-conjur-env-builder
 
 echo "Starting tests for 0001_retrieve-secrets.sh..."
 
 # Uncomment when running locally
-# docker-compose run --rm tester --formatter tap ./test
+# docker compose run --rm tester --formatter tap ./test
 
 # Comment out when running locally
-docker-compose run --rm tester --formatter junit ./test
+docker compose run --rm tester --formatter junit ./test
