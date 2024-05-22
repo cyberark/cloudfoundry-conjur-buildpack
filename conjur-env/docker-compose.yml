@@ -2,7 +2,22 @@ services:
   conjur-env-builder:
     build: 
       context: .
+    environment:
+      - GOOS=linux
+      - GOARCH=amd64
+      - CGO_ENABLED=0
     volumes:
       - .:/conjur-env
       - ../vendor:/pkg
     command: go build -o /pkg/conjur-env -a -ldflags '-extldflags "-static"' .
+  conjur-win-env-builder:
+    build:
+      context: .
+    environment:
+      - GOOS=windows
+      - GOARCH=amd64
+      - CGO_ENABLED=0
+    volumes:
+      - .:/conjur-env
+      - ../vendor:/pkg
+    command: go build -o /pkg/conjur-win-env.exe -a -ldflags '-extldflags "-static"' .

@@ -47,6 +47,11 @@ pushd ../tests/integration/apps/java
   ./bin/build
 popd
 
+announce 'Building the Dotnet Windows test application...'
+pushd ../tests/integration/apps/dotnet-windows
+  ./build
+popd
+
 announce 'Running Cucumber tests...'
 # Run tests against latest build of buildpack (including integration tests against remote foundation)
 docker compose \
