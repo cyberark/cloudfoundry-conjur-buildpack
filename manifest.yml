@@ -4,49 +4,45 @@ metadata:
     contact: "Conjur Maintainers - conj_maintainers@cyberark.com"
 default_versions:
 - name: go
-  version: 1.20.x
+  version: 1.22.x
 dependency_deprecation_dates:
-- version_line: 1.20.x
-  name: go
-  date: 2024-02-01
-  link: https://golang.org/doc/devel/release.html
 - version_line: 1.21.x
   name: go
   date: 2024-08-15
   link: https://golang.org/doc/devel/release.html
 dependencies:
 - name: go
-  version: 1.20.9
-  uri: https://buildpacks.cloudfoundry.org/dependencies/go/go_1.20.9_linux_x64_cflinuxfs3_2bf83781.tgz
-  sha256: 2bf83781fa63a1edc157368f2564c20b50a0fcabfaf95b80ad373f15c3555a6a
+  version: 1.21.9
+  uri: https://buildpacks.cloudfoundry.org/dependencies/go/go_1.21.9_linux_x64_cflinuxfs3_91b30394.tgz
+  sha256: 91b30394ee0c68e4889fd508fd98c2addee5d40864cac1b93452882451bb228e
   cf_stacks:
   - cflinuxfs3
-  source: https://dl.google.com/go/go1.20.9.src.tar.gz
-  source_sha256: 4923920381cd71d68b527761afefa523ea18c5831b4795034c827e18b685cdcf
+  source: https://dl.google.com/go/go1.21.9.src.tar.gz
+  source_sha256: 58f0c5ced45a0012bce2ff7a9df03e128abcc8818ebabe5027bb92bafe20e421
 - name: go
-  version: 1.20.9
-  uri: https://buildpacks.cloudfoundry.org/dependencies/go/go_1.20.9_linux_x64_cflinuxfs4_23cc8463.tgz
-  sha256: 23cc8463b6bbe90f08dbf28e2a501886ccf1c01d45e6ebd58b59ec0e5973198d
+  version: 1.21.9
+  uri: https://buildpacks.cloudfoundry.org/dependencies/go/go_1.21.9_linux_x64_cflinuxfs4_bca1fc60.tgz
+  sha256: bca1fc60464192de70be59505a374e93a617f87a86351e2c2a15152605d08469
   cf_stacks:
   - cflinuxfs4
-  source: https://dl.google.com/go/go1.20.9.src.tar.gz
-  source_sha256: 4923920381cd71d68b527761afefa523ea18c5831b4795034c827e18b685cdcf
+  source: https://dl.google.com/go/go1.21.9.src.tar.gz
+  source_sha256: 58f0c5ced45a0012bce2ff7a9df03e128abcc8818ebabe5027bb92bafe20e421
 - name: go
-  version: 1.21.2
-  uri: https://buildpacks.cloudfoundry.org/dependencies/go/go_1.21.2_linux_x64_cflinuxfs3_9d661bee.tgz
-  sha256: 9d661beeb4de39f9beacbca1564f31ca5ca0a7f8b365aa5c2cfcfcf5a11ebad0
+  version: 1.22.2
+  uri: https://buildpacks.cloudfoundry.org/dependencies/go/go_1.22.2_linux_x64_cflinuxfs3_a02801f6.tgz
+  sha256: a02801f67a73b20ff7edae16b25d3af51e2418feb6d6e50e5d0f8c10b6796983
   cf_stacks:
   - cflinuxfs3
-  source: https://dl.google.com/go/go1.21.2.src.tar.gz
-  source_sha256: 45e59de173baec39481854490d665b726cec3e5b159f6b4172e5ec7780b2c201
+  source: https://dl.google.com/go/go1.22.2.src.tar.gz
+  source_sha256: 374ea82b289ec738e968267cac59c7d5ff180f9492250254784b2044e90df5a9
 - name: go
-  version: 1.21.2
-  uri: https://buildpacks.cloudfoundry.org/dependencies/go/go_1.21.2_linux_x64_cflinuxfs4_b900d2c1.tgz
-  sha256: b900d2c13f6b229ab9c0d338582824e6b76f74359aa9c5a7e2169029b3cb2612
+  version: 1.22.2
+  uri: https://buildpacks.cloudfoundry.org/dependencies/go/go_1.22.2_linux_x64_cflinuxfs4_4dbc8e16.tgz
+  sha256: 4dbc8e16ac679e5ba50b26d5f4fbd4fddd82d7a3612a3082ed33fb4472d2b3c3
   cf_stacks:
   - cflinuxfs4
-  source: https://dl.google.com/go/go1.21.2.src.tar.gz
-  source_sha256: 45e59de173baec39481854490d665b726cec3e5b159f6b4172e5ec7780b2c201
+  source: https://dl.google.com/go/go1.22.2.src.tar.gz
+  source_sha256: 374ea82b289ec738e968267cac59c7d5ff180f9492250254784b2044e90df5a9
 include_files:
 - CHANGELOG.md
 - CONTRIBUTING.md
@@ -56,8 +52,12 @@ include_files:
 - VERSION
 - bin/compile
 - bin/supply
+- bin/supply.bat
+- bin/supply.ps1
 - lib/0001_retrieve-secrets.sh
+- lib/0001_retrieve-secrets.bat
 - lib/install_go.sh
 - vendor/conjur-env
+- vendor/conjur-win-env.exe
 - manifest.yml
 language: conjur # used solely to name the .zip

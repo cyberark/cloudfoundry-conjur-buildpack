@@ -9,7 +9,7 @@ build_test_images
 start_conjur
 
 # Runs the cflinux4 image in interactive mode with the project files mounted
-docker-compose \
+docker compose \
   -f "$DOCKER_COMPOSE_FILE" \
   run --rm \
   -e BUILDPACK_BUILD_DIR="/cyberark/cloudfoundry-conjur-buildpack/conjur_buildpack" \

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+rm -rf publish
+
+docker run \
+  --rm \
+  -v $(pwd):/app \
+  -w /app \
+  mcr.microsoft.com/dotnet/sdk:8.0 \
+  dotnet publish -r win-x64 --self-contained -c Release -o publish
