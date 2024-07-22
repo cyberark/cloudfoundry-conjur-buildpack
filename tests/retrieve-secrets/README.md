@@ -49,7 +49,7 @@ environment, then  assert upon the output. BATS offers the `$output` variable, w
 contains the output from the previous command executed using the `run` prefix.
 
 ### `stop`
-Removes existing docker-compose containers
+Removes existing Docker Compose environment
 
 ### Configuration
 

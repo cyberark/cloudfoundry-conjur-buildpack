@@ -1,7 +1,7 @@
-version: '2.1'
 services:
   mock-conjur-env-builder:
-    build: ""
+    build:
+      context: .
     volumes:
       - .:/mock-conjur-env
       - ../../tmp/vendor:/pkg

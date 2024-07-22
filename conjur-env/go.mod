@@ -58,4 +58,4 @@ replace golang.org/x/sys v0.5.0 => golang.org/x/sys v0.8.0
 
 replace golang.org/x/sys v0.8.0 => golang.org/x/sys v0.8.0
 
-go 1.17
+go 1.22.2

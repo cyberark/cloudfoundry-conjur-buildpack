@@ -1,0 +1,12 @@
+applications:
+- name: dotnet-windows-app
+  random-route: true
+  stack: windows
+  path: publish
+  memory: 1G
+  command: .\dotnet-windows.exe --urls http://0.0.0.0:8080
+  buildpacks:
+    - {conjur_buildpack}
+    - binary_buildpack
+  env:
+    CONJUR_BUILDPACK_BYPASS_SERVICE_CHECK: true
