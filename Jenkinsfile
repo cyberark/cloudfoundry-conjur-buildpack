@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+@Library(['pipeline-library@tas-updates']) _
+
 pipeline {
   agent { label 'executor-v2' }
 
