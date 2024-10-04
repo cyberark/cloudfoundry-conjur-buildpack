@@ -40,7 +40,11 @@ build_test_images
 start_conjur
 
 # If we're running in Jenkins, skip this step
-[[ -z $JENKINS_HOME ]] && package_and_unpack_buildpack
+if [[ -z "${INFRAPOOL_JENKINS_HOME:-}" ]]; then
+    package_and_unpack_buildpack
+else
+    echo "Skipping package and unpack on Jenkins"
+fi
 
 announce 'Building the Java test application...'
 pushd ../tests/integration/apps/java
