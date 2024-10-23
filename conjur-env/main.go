@@ -12,7 +12,7 @@ import (
 	"sync"
 
 	"github.com/cyberark/conjur-api-go/conjurapi"
-	"github.com/cyberark/summon/secretsyml"
+	"github.com/cyberark/summon/pkg/secretsyml"
 )
 
 const (

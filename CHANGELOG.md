@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.1] - 2024-10-23
+
+### Changed
+- Project Go version bumped to 1.23 (CONJSE-1918)
+- Bump test dependencies (CONJSE-1918)
+
 ## [2.4.0] - 2024-05-30
 
 ### Added

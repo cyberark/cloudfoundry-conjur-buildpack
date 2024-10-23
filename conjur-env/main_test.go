@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/cyberark/summon/secretsyml"
+	"github.com/cyberark/summon/pkg/secretsyml"
 	"github.com/stretchr/testify/assert"
 )
 
