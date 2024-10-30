@@ -37,7 +37,7 @@ func defaultTempPath() string {
 
 // Create a temp file with given value. Returns the path.
 func (tf *tempFactory) push(bytes []byte) string {
-	f, _ := ioutil.TempFile(tf.path, ".conjur-env")
+	f, _ := os.CreateTemp(tf.path, ".conjur-env")
 	defer f.Close()
 
 	f.Write(bytes)
