@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+@Library(['product-pipelines-shared-library', 'conjur-enterprise-sharedlib']) _
 
 // Automated release, promotion and dependencies
 properties([
@@ -74,11 +75,21 @@ pipeline {
       }
     }
 
+    stage('Get latest upstream dependencies') {
+      steps {
+        script {
+          updatePrivateGoDependencies("${WORKSPACE}/conjur-env/go.mod")
+          infrapool.agentPut from: "conjur-env/vendor", to: "${WORKSPACE}/conjur-env/"
+          infrapool.agentPut from: "conjur-env/go.*", to: "${WORKSPACE}/conjur-env/"
+          infrapool.agentPut from: "/root/go", to: "/var/lib/jenkins/"
+        }
+      }
+    }
 
     stage('Package') {
       steps {
         script {
-          infrapool.agentSh './package.sh && ./unpack.sh'
+          infrapool.agentSh './package.sh --skip-gomod-download && ./unpack.sh'
           infrapool.agentArchiveArtifacts(artifacts: 'conjur_buildpack*.zip')
         }
       }
