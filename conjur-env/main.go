@@ -243,9 +243,14 @@ func retrieveSecrets(
 		base64.StdEncoding.Encode(encodedBytes, result.bytes)
 		exportSetting := fmt.Sprintf("%s: %s", result.key, encodedBytes)
 
-		// Clear the secret data from unneeded vars
-		result.bytes = []byte{}
-		encodedBytes = []byte{}
+		// Clear the secret data from memory
+		for byte := range result.bytes {
+			result.bytes[byte] = 0
+		}
+
+		for byte := range encodedBytes {
+			encodedBytes[byte] = 0
+		}
 
 		return exportSetting
 	}

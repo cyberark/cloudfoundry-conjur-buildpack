@@ -180,23 +180,54 @@ integration tests on a remote PCF environment, run:
 ./ci/clear_ci_artifacts
 ```
 
-## Releasing
+## Releases
 
-1. Based on the unreleased content, determine the new version number and update the [VERSION](VERSION) file. This project uses [semantic versioning](https://semver.org/).
-1. Ensure the [changelog](CHANGELOG.md) is up to date with the changes included in the release.
-1. Ensure the [open source acknowledgements](NOTICES.txt) are up to date with
-   the dependencies in the [conjur-env binary](conjur-env/go.mod), and
-   update the file if there have been any new or changed dependencies
-   since the last release.
-1. Commit these changes - `Bump version to x.y.z` is an acceptable commit message.
-1. Once your changes have been reviewed and merged into master, tag the version
-   using `git tag -s v0.1.1`. Note this requires you to be  able to sign releases.
-   Consult the [github documentation on signing commits](https://help.github.com/articles/signing-commits-with-gpg/)
-   on how to set this up. `vx.y.z` is an acceptable tag message.
-1. Push the tag: `git push vx.y.z` (or `git push origin vx.y.z` if you are working
-   from your local machine).
-1. Retrieve the archived release ZIP from the Jenkins build. Upload this ZIP
-   file to the GitHub release.
+### Verify and update dependencies
+
+1.  Review the changes to `conjur-env/go.mod` since the last release and make any needed
+    updates to [NOTICES.txt](./NOTICES.txt):
+    *   Verify that dependencies fit into supported licenses types:
+        ```shell
+         cd conjur-env && \
+         go-licenses check ./conjur-env/... --allowed_licenses="MIT,ISC,Apache-2.0,BSD-3-Clause" \
+            --ignore github.com/cyberark/cloudfoundry-conjur-buildpack/conjur-env \
+            --ignore $(go list std | awk 'NR > 1 { printf(",") } { printf("%s",$0) } END { print "" }')
+        ```
+        If there is new dependency having unsupported license, such license should be included to [notices.tpl](./notices.tpl)
+        file in order to get generated in NOTICES.txt.  
+
+        NOTE: The second ignore flag tells the command to ignore standard library packages, which
+        may or may not be necessary depending on your local Go installation and toolchain.
+
+    *   If no errors occur, proceed to generate updated NOTICES.txt:
+        ```shell
+         go-licenses report ./... --template ../notices.tpl > ../NOTICES.txt \
+            --ignore github.com/cyberark/cloudfoundry-conjur-buildpack/conjur-env \
+            --ignore $(go list std | awk 'NR > 1 { printf(",") } { printf("%s",$0) } END { print "" }')
+
+### Update the version and changelog
+
+1.  Create a new branch for the version bump.
+
+2.  Ensure the [changelog](CHANGELOG.md) is up to date with the changes included in the release, and that
+    the unreleased changes are captured under an appropriate version number. This project uses [semantic versioning](https://semver.org/).
+
+3.  Ensure the [open source acknowledgements](NOTICES.txt) are up to date with the dependencies in the
+    [conjur-env binary](conjur-env/go.mod) and update the file if there have been any new or changed 
+    dependencies since the last release.
+
+4.  Commit these changes - `Bump version to x.y.z` is an acceptable commit message - and open a PR
+    for review. Your PR should include updates to
+    `CHANGELOG.md`, and if there are any license updates, to `NOTICES.txt`.
+
+### Release and Promote
+
+1.  Jenkins build parameters can be utilized to release and promote successful builds.
+
+2.  Merging into main/master branches will automatically trigger a release.
+
+3.  Reference the [internal automated release doc](https://github.com/conjurinc/docs/blob/master/reference/infrastructure/automated_releases.md#release-and-promotion-process)
+    for releasing and promoting.
 
    **IMPORTANT** Do not upload any artifacts besides the ZIP to the GitHub
    release. At this time, the tile build assumes the project ZIP is the only

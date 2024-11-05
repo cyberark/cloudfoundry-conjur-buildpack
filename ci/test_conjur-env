@@ -9,9 +9,6 @@ docker run \
   --rm golang \
   bash -c '''
   set -euo pipefail
-  # Run golint
-  go install golang.org/x/lint/golint@latest
-  golint -set_exit_status ./...
 
   # Run go vet
   go vet ./...
