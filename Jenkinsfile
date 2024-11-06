@@ -185,6 +185,7 @@ pipeline {
                If your assets are in target on the main Jenkins agent, use:
                  infrapool.agentPut(from: 'target/', to: assetDirectory)
             */
+            infrapool.agentSh "cp conjur_buildpack*.zip ${assetDirectory}"
           })
         }
       }

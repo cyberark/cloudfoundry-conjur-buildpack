@@ -20,8 +20,12 @@ done
 
 cd "$(dirname $0)"
 
+. ./utils.sh
+
+VERSION="$(project_semantic_version)"
+
 echo "Removing previous builds..."
-rm -f "conjur_buildpack-v$(cat VERSION)"
+rm -f "conjur_buildpack-v$VERSION.zip"
 
 echo "Building the conjur-env..."
 export SKIP_GOMOD_DOWNLOAD
@@ -35,4 +39,4 @@ docker run --rm \
   -w /cyberark \
   -v $(pwd):/cyberark \
   packager \
-  /bin/bash -c "buildpack-packager build -any-stack"
+  /bin/bash -c "buildpack-packager build -any-stack --version=$VERSION"

@@ -5,7 +5,9 @@
 
 cd "$(dirname $0)"
 
-ZIP_FILE="conjur_buildpack-v$(cat VERSION).zip"
+. ./utils.sh
+
+ZIP_FILE="conjur_buildpack-v$(project_semantic_version).zip"
 BUILDPACK_BUILD_DIR="./conjur_buildpack"
 
 echo "Cleaning up local buildpack instances..."
