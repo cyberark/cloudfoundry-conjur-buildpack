@@ -12,6 +12,8 @@ function announce {
 }
 
 function finish {
+  announce 'Container Logs'
+  docker compose logs
   announce 'Removing environment...'
   docker compose -f "$DOCKER_COMPOSE_FILE" down -v
 }
@@ -40,9 +42,10 @@ function build_test_images {
 }
 
 function start_conjur {
-  announce 'Waiting for Conjur to start...'
+  announce 'Waiting for Conjur Container to start...'
   docker compose -f "$DOCKER_COMPOSE_FILE" up -d conjur
 
+  announce 'Waiting for Conjur Daemon to start...'
   docker compose -f "$DOCKER_COMPOSE_FILE" exec -T conjur conjurctl wait -r 45 -p 80
 }
 

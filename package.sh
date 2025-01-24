@@ -7,13 +7,28 @@
 # The buildpack-packager expects all buildpack relevant files
 # and folders to be housed in the top-level directory.
 
+# When running in Jenkins, we need to skip the go mod download command since we
+# already fetch the latest dependencies with updatePrivateGoDependencies(). We
+# use the --skip-gomod-download flag for this purpose.
+SKIP_GOMOD_DOWNLOAD=false
+while true ; do
+  case "$1" in
+    --skip-gomod-download ) SKIP_GOMOD_DOWNLOAD=true ; shift ;;
+     * ) if [ -z "$1" ]; then break; else echo "$1 is not a valid option"; exit 1; fi;;
+  esac
+done
+
 cd "$(dirname $0)"
 
+. ./utils.sh
+
+VERSION="$(project_semantic_version)"
+
 echo "Removing previous builds..."
-rm -rf ./conjur-env/vendor
-rm -f "conjur_buildpack-v$(cat VERSION)"
+rm -f "conjur_buildpack-v$VERSION.zip"
 
 echo "Building the conjur-env..."
+export SKIP_GOMOD_DOWNLOAD
 ./conjur-env/build.sh
 
 echo "Building the image for buildpack-packager..."
@@ -24,4 +39,4 @@ docker run --rm \
   -w /cyberark \
   -v $(pwd):/cyberark \
   packager \
-  /bin/bash -c "buildpack-packager build -any-stack"
+  /bin/bash -c "buildpack-packager build -any-stack --version=$VERSION"

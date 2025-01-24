@@ -7,10 +7,12 @@
 
 cd "$(dirname $0)"
 
+. ./utils.sh
+
 # BUILDPACK_NAME is provided by our bin/test_e2e script
 # It not set, it will default to `conjur_buildpack`
 NAME="${BUILDPACK_NAME:-conjur_buildpack}"
-ZIP_FILE="conjur_buildpack-v$(cat VERSION).zip"
+ZIP_FILE="conjur_buildpack-v$(project_semantic_version).zip"
 
 echo "Deleting previous instances of the conjur-buildpack..."
 cf delete-buildpack -f "$NAME"

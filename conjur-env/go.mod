@@ -1,8 +1,10 @@
 module github.com/cyberark/cloudfoundry-conjur-buildpack/conjur-env
 
+go 1.23.2
+
 require (
-	github.com/cyberark/conjur-api-go v0.11.0
-	github.com/cyberark/summon v0.9.5
+	github.com/cyberark/conjur-api-go v0.12.5
+	github.com/cyberark/summon v0.10.1
 	github.com/stretchr/testify v1.8.0
 )
 
@@ -16,7 +18,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
-	github.com/zalando/go-keyring v0.2.2 // indirect
+	github.com/zalando/go-keyring v0.2.3-0.20230503081219-17db2e5354bd // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
@@ -58,4 +60,7 @@ replace golang.org/x/sys v0.5.0 => golang.org/x/sys v0.8.0
 
 replace golang.org/x/sys v0.8.0 => golang.org/x/sys v0.8.0
 
-go 1.22.2
+// DO NOT EDIT: CHANGES TO THE BELOW LINE WILL BREAK AUTOMATED RELEASES
+replace github.com/cyberark/conjur-api-go => github.com/cyberark/conjur-api-go latest
+// DO NOT EDIT: CHANGES TO THE BELOW LINE WILL BREAK AUTOMATED RELEASES
+replace github.com/cyberark/summon => github.com/cyberark/summon latest

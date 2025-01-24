@@ -1,5 +1,5 @@
-FROM golang:1.22
-MAINTAINER CyberArk Software, Inc.
+FROM golang:1.23
+LABEL maintainer="CyberArk Software, Inc."
 
 ENV GOOS=linux \
     GOARCH=amd64 \

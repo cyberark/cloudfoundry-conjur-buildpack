@@ -12,7 +12,7 @@ import (
 	"sync"
 
 	"github.com/cyberark/conjur-api-go/conjurapi"
-	"github.com/cyberark/summon/secretsyml"
+	"github.com/cyberark/summon/pkg/secretsyml"
 )
 
 const (
@@ -64,6 +64,15 @@ func (c ConjurCredentials) setEnv() {
 	os.Setenv("CONJUR_VERSION", strconv.Itoa(c.Version))
 }
 
+func unsetEnv() {
+	os.Unsetenv("CONJUR_APPLIANCE_URL")
+	os.Unsetenv("CONJUR_AUTHN_LOGIN")
+	os.Unsetenv("CONJUR_AUTHN_API_KEY")
+	os.Unsetenv("CONJUR_ACCOUNT")
+	os.Unsetenv("CONJUR_SSL_CERTIFICATE")
+	os.Unsetenv("CONJUR_VERSION")
+}
+
 func setConjurCredentialsEnv() error {
 	// Get the Conjur connection information from the VCAP_SERVICES
 	vcapServices := os.Getenv("VCAP_SERVICES")
@@ -96,6 +105,9 @@ func NewAPIProvider() (Provider, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Unset the environment variables after the client is created
+	defer unsetEnv()
 
 	config, err := conjurapi.LoadConfig()
 	if err != nil {
@@ -164,12 +176,12 @@ func validateEnvVarNames(secrets secretsyml.SecretsMap) error {
 
 // retrieveSecrets retrieves secrets and generates export command strings
 // by doing the following:
-// - Create/load a specified secrets provider
-// - Retrieve secrets using that provider based on a given secrets map
-// - Create temp files for any secrets that require their values to
-//   be stored in a file
-// - Generate a concatenation of export command strings that can be used
-//   to inject the secrets into a shell environment.
+//   - Create/load a specified secrets provider
+//   - Retrieve secrets using that provider based on a given secrets map
+//   - Create temp files for any secrets that require their values to
+//     be stored in a file
+//   - Generate a concatenation of export command strings that can be used
+//     to inject the secrets into a shell environment.
 func retrieveSecrets(
 	secrets secretsyml.SecretsMap,
 	newProvider newProvider,
@@ -225,12 +237,22 @@ func retrieveSecrets(
 	wg.Wait()
 	close(results)
 
-	// Inline function to generate an export string
+	// Inline function to generate an export string	of the form "<variable>: <base64-encoded-value>"
 	makeSetting := func(result result) string {
-		// Base64 encode the value
-		encodedValue := base64.StdEncoding.EncodeToString(result.bytes)
-		// Create a setting of the form "<variable>: <base64-encoded-value>"
-		return fmt.Sprintf("%s: %s", result.key, encodedValue)
+		encodedBytes := make([]byte, base64.StdEncoding.EncodedLen(len(result.bytes)))
+		base64.StdEncoding.Encode(encodedBytes, result.bytes)
+		exportSetting := fmt.Sprintf("%s: %s", result.key, encodedBytes)
+
+		// Clear the secret data from memory
+		for byte := range result.bytes {
+			result.bytes[byte] = 0
+		}
+
+		for byte := range encodedBytes {
+			encodedBytes[byte] = 0
+		}
+
+		return exportSetting
 	}
 
 	// Generate settings
