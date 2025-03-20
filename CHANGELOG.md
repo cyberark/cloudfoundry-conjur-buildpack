@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.2] - 2024-03-19
+
+### Changed
+- Added 1.23.x Go buildpack, and support for deprecated Go version 1.21 removed.
+
 ## [2.4.1] - 2024-10-23
 
 ### Changed
