@@ -1,25 +1,26 @@
 module github.com/cyberark/cloudfoundry-conjur-buildpack/conjur-env
 
-go 1.23.2
+go 1.23.6
 
 require (
-	github.com/cyberark/conjur-api-go v0.12.5
+	github.com/cyberark/conjur-api-go v0.12.12
 	github.com/cyberark/summon v0.10.1
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.9.0
 )
 
 require (
-	github.com/alessio/shellescape v1.4.1 // indirect
+	al.essio.dev/pkg/shellescape v1.5.1 // indirect
+	github.com/Masterminds/semver/v3 v3.3.1 // indirect
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
-	github.com/danieljoos/wincred v1.1.2 // indirect
+	github.com/danieljoos/wincred v1.2.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
-	github.com/zalando/go-keyring v0.2.3-0.20230503081219-17db2e5354bd // indirect
-	golang.org/x/sys v0.8.0 // indirect
+	github.com/zalando/go-keyring v0.2.6 // indirect
+	golang.org/x/sys v0.26.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
@@ -59,8 +60,3 @@ replace golang.org/x/sys v0.3.0 => golang.org/x/sys v0.8.0
 replace golang.org/x/sys v0.5.0 => golang.org/x/sys v0.8.0
 
 replace golang.org/x/sys v0.8.0 => golang.org/x/sys v0.8.0
-
-// DO NOT EDIT: CHANGES TO THE BELOW LINE WILL BREAK AUTOMATED RELEASES
-replace github.com/cyberark/conjur-api-go => github.com/cyberark/conjur-api-go latest
-// DO NOT EDIT: CHANGES TO THE BELOW LINE WILL BREAK AUTOMATED RELEASES
-replace github.com/cyberark/summon => github.com/cyberark/summon latest
