@@ -21,7 +21,7 @@ RUN wget -q https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key &&
 
 # Install ruby dependencies
 RUN mkdir -p "$TEST_PATH" && \
-    gem install bundler -v 2.3.26 && \
+    gem install bundler && \
     # This will prevent warnings about installing gems as root
     bundle config --global silence_root_warning 1
 
