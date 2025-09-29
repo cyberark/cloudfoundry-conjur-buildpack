@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.3] - 2025-09-29
+- Updated documentation to align with Conjur Enterprise name change to Secrets Manager. (CNJR-10989)
+
 ## [2.4.2] - 2024-03-19
 
 ### Changed
@@ -239,7 +242,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.0...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.3...HEAD
+[2.4.3]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.2...v2.4.3
+[2.4.2]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.1...v2.4.2
+[2.4.1]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.8...v2.3.0
 [2.2.8]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.7...v2.2.8
