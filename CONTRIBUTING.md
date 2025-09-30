@@ -1,6 +1,6 @@
-# Contributing to the Conjur Buildpack
+# Contributing to the Secrets Manager Buildpack
 
-Thanks for your interest in contributing to the Conjur Buildpack! Here
+Thanks for your interest in contributing to the Secrets Manager Buildpack! Here
 are some guidelines on how to get started.
 
 For general contribution and community guidelines, including our
@@ -26,10 +26,10 @@ http://ecotrust-canada.github.io/markdown-toc/
 
 ## Prerequisites
 
-The following prerequisites and all sections below pertain to building and running the Conjur Buildpack locally,
+The following prerequisites and all sections below pertain to building and running the Secrets Manager Buildpack locally,
 unless otherwise specified.
 
-Before getting started, you should install some developer tools. These are not required to deploy the Conjur Buildpack but they will let you develop using a standardized, expertly configured environment.
+Before getting started, you should install some developer tools. These are not required to deploy the Secrets Manager Buildpack but they will let you develop using a standardized, expertly configured environment.
 
 1. [git][get-git] to manage source code
 2. [Docker][get-docker] to manage dependencies and runtime environments
@@ -82,19 +82,19 @@ The buildpack has a cucumber test suite. This validates the functionality and
 also offers great insight into the intended functionality of the buildpack.
 Please see `./tests/features`.
 
-To test the usage of the Conjur Service Broker within a CF deployment, you can
+To test the usage of the Secrets Manager Service Broker within a CF deployment, you can
 follow the demo scripts in the [Cloud Foundry demo repo](https://github.com/conjurinc/cloudfoundry-conjur-demo).
 
 ### Running the Dev Environment
 
 To test your changes within a running instance of [Cloud Foundry Stack](https://docs.cloudfoundry.org/devguide/deploy-apps/stacks.html)
-and Conjur, run:
+and Secrets Manager, run:
 
 ```shell script
 ./ci/start_dev_environment
 ```
 
-This starts Conjur and Cloud Foundry Stack containers, and provides terminal
+This starts Secrets Manager and Cloud Foundry Stack containers, and provides terminal
 access to the Cloud Foundry container. You do not need to restart the container
 after you make changes to the project.
 
@@ -147,7 +147,7 @@ on a remote PCF instance or privileged credentials. Run:
 ./ci/test_integration
 ```
 
-This starts Conjur and Cloud Foundry Stack containers, and 
+This starts Secrets Manager and Cloud Foundry Stack containers, and 
 runs the `cucumber` tests within. 
 
 ### End to End Testing

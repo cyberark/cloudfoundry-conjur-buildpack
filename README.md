@@ -1,8 +1,8 @@
-# CyberArk Conjur Buildpack
+# CyberArk Secrets Manager Buildpack
 
-The CyberArk Conjur Buildpack is a [supply buildpack](https://docs.cloudfoundry.org/buildpacks/understand-buildpacks.html#supply-script)
+The CyberArk Secrets Manager Buildpack is a [supply buildpack](https://docs.cloudfoundry.org/buildpacks/understand-buildpacks.html#supply-script)
 that installs scripts to provide convenient and secure access to secrets stored
-in Conjur.
+in Secrets Manager.
 
 The buildpack supplies scripts to your application that do the following:
 
@@ -11,16 +11,16 @@ The buildpack supplies scripts to your application that do the following:
 
 + Retrieve credentials stored in your app's [`VCAP_SERVICES`](https://docs.run.pivotal.io/devguide/deploy-apps/environment-variable.html#VCAP-SERVICES)
   environment variable to communicate with the bound `cyberark-conjur` service
-  instance of the [Conjur Service Broker](https://github.com/cyberark/conjur-service-broker).
+  instance of the [Secrets Manager Service Broker](https://github.com/cyberark/conjur-service-broker).
 
-+ Authenticate using the Conjur credentials, fetch the relevant secrets from
-  Conjur, and inject them into the session environment variables at the start of
++ Authenticate using the Secrets Manager credentials, fetch the relevant secrets from
+  Secrets Manager, and inject them into the session environment variables at the start of
   the app. The secrets are only available to the app process.
   
 ## Requirements
 
-+ Your app must be bound to a Conjur service instance. For more information on
-  binding your application to a Conjur service instance, see the [Conjur Service Broker documentation](https://github.com/cyberark/conjur-service-broker#bind-your-application-to-the-conjur-service).
++ Your app must be bound to a Secrets Manager service instance. For more information on
+  binding your application to a Secrets Manager service instance, see the [Secrets Manager Service Broker documentation](https://github.com/cyberark/conjur-service-broker#bind-your-application-to-the-conjur-service).
 
 + Your app must have a `secrets.yml` file in its root directory or in a [configured location](#secrets_yaml).
 
@@ -50,29 +50,29 @@ The `profile.d` script is run automatically when the application starts and is
 responsible for retrieving secrets and injecting them into the app's session
 environment variables.
 
-The `conjur-env` binary leverages the [Conjur Go API](https://github.com/cyberark/conjur-api-go)
-and [Summon](https://github.com/cyberark/summon) to authenticate with Conjur and
-retrieve secrets using the application identity provided by the Conjur Service
+The `conjur-env` binary leverages the [Secrets Manager Go API](https://github.com/cyberark/conjur-api-go)
+and [Summon](https://github.com/cyberark/summon) to authenticate with Secrets Manager and
+retrieve secrets using the application identity provided by the Secrets Manager Service
 Broker.
 
 ## Getting Started
 
-The Conjur Buildpack can be included in a CloudFoundry application as an online
+The Secrets Manager Buildpack can be included in a CloudFoundry application as an online
 buildpack, using the GitHub repository address, or installed into a
 CloudFoundry foundation.
 
 For documentation on how to use the online buildpack, see [using](#online)
 below for details.
 
-### Installing the Conjur Buildpack
+### Installing the Secrets Manager Buildpack
 
 **Before you begin, ensure you are logged into your CF deployment via the CF CLI.**
 
-To install the Conjur Buildpack, download a ZIP of [the latest release](https://github.com/cyberark/cloudfoundry-conjur-buildpack/releases),
+To install the Secrets Manager Buildpack, download a ZIP of [the latest release](https://github.com/cyberark/cloudfoundry-conjur-buildpack/releases),
 unzip the release into its own directory, and run the `upload.sh` script:
 
 ```shell
-# Download latest version of the Conjur Buildpack
+# Download latest version of the Secrets Manager Buildpack
 wget -q --show-progress \
   -O "${PWD}/conjur_buildpack.zip" \
   $(curl -s \
@@ -98,18 +98,18 @@ Alternatively, you can clone the entire repository, and run the following comman
 The `./package.sh` script will run [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager)
 within the `buildpack` directory and create a `.ZIP` file. `upload.sh` will run
 `cf create-buildpack` similar to the command above, as well as removing prior
-instances of the Conjur Buildpack with `cf delete-buildpack`.
+instances of the Secrets Manager Buildpack with `cf delete-buildpack`.
 
-Earlier versions of the Conjur Buildpack (v0.x) may be installed by cloning the
+Earlier versions of the Secrets Manager Buildpack (v0.x) may be installed by cloning the
 repository and running `./upload.sh`.
 
-### Using the Conjur Buildpack
+### Using the Secrets Manager Buildpack
 
 #### Create a `secrets.yml` File
 
-For each application that will be using the Conjur Buildpack you must create a
+For each application that will be using the Secrets Manager Buildpack you must create a
 `secrets.yml` file. The `secrets.yml` file gives a mapping of **environment
-variable name** to a **location where a secret is stored in Conjur**. For more
+variable name** to a **location where a secret is stored in Secrets Manager**. For more
 information about creating this file, [see the Summon documentation](https://cyberark.github.io/summon/#secrets.yml).
 There are no sensitive values in the file itself, so it can safely be checked into source control.
 
@@ -167,7 +167,7 @@ $ cf restage {Application Name}
 ##### Using environments in your secrets.yml
 
 Secrets in the `secrets.yml` file can be grouped into sections called
-_environments_. The Conjur Buildpack will inject all secrets in the `common`
+_environments_. The Secrets Manager Buildpack will inject all secrets in the `common`
 section regardless of the environment the app is running in. To load
 environment-specific secrets at runtime, set the `SECRETS_YAML_ENVIRONMENT`
 environment variable to the string value of the environment's YAML key.
@@ -220,8 +220,8 @@ application environment:
 
 #### Invoke the Installed Buildpack at Deploy Time
 
-When you deploy your application, ensure it is bound to a Conjur service instance
-and add the Conjur Buildpack to your `cf push` command:
+When you deploy your application, ensure it is bound to a Secrets Manager service instance
+and add the Secrets Manager Buildpack to your `cf push` command:
 
 ```sh
 cf push my-app -b conjur_buildpack ... -b final_buildpack
@@ -241,21 +241,21 @@ applications:
   - ruby_buildpack
 ```
 
-When your application starts, the Conjur Buildpack will inject the secrets
+When your application starts, the Secrets Manager Buildpack will inject the secrets
 specified in the `secrets.yml` file into the application process as environment
 variables.
 
-**Note:** If you add the Conjur buildpack to your manifest or `cf push` command
+**Note:** If you add the Secrets Manager buildpack to your manifest or `cf push` command
 but don't also explicitly include the language buildpack, Cloud Foundry will see
-that the Conjur buildpack is not a "final buildpack" and will fail to invoke it.
+that the Secrets Manager buildpack is not a "final buildpack" and will fail to invoke it.
 To use this buildpack, you **must** follow the instructions for
 [using multiple buildpacks](https://docs.cloudfoundry.org/buildpacks/use-multiple-buildpacks.html)
-and specify _both_ the Conjur buildpack **and** the final, language buildpack for
+and specify _both_ the Secrets Manager buildpack **and** the final, language buildpack for
 your app (in that order).
 
 ##### <a name="online"></a> Invoking the Online Buildpack at Deploy Time
 
-To use the CyberArk Conjur Buildpack as an online buildpack, use the GitHub
+To use the CyberArk Secrets Manager Buildpack as an online buildpack, use the GitHub
 repository address instead of specifying the installed buildpack name. This may
 be done with the `cf push` command or using the manifest file.
 
@@ -284,7 +284,7 @@ https://github.com/cyberark/cloudfoundry-conjur-buildpack#TAG
 
 ## Contributing
 
-We welcome contributions of all kinds to the Conjur Buildpack. For instructions on
+We welcome contributions of all kinds to the Secrets Manager Buildpack. For instructions on
 how to get started and descriptions of our development workflows, please see our
 [contributing guide](CONTRIBUTING.md). 
 
