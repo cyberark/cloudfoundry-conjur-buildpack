@@ -4,7 +4,7 @@ go 1.24.1
 
 require (
 	github.com/cyberark/conjur-api-go v0.13.8
-	github.com/cyberark/summon v0.10.6
+	github.com/cyberark/summon v0.10.7
 	github.com/stretchr/testify v1.11.1
 )
 
