@@ -6,7 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.4] - 2025-10-27
+
+### Changed
+- Updated Docker base images to use go-alpine variants for smaller image sizes.
+
 ## [2.4.3] - 2025-09-29
+
+### Changed
 - Updated documentation to align with Conjur Enterprise name change to Secrets Manager. (CNJR-10989)
 
 ## [2.4.2] - 2024-03-19
