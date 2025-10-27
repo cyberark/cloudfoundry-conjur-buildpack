@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Updated Docker base images to use go-alpine variants for smaller image sizes.
+- Updated conjur-env dependencies to latest versions
 
 ## [2.4.3] - 2025-09-29
 
