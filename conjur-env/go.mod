@@ -1,6 +1,6 @@
 module github.com/cyberark/cloudfoundry-conjur-buildpack/conjur-env
 
-go 1.24.1
+go 1.25.3
 
 require (
 	github.com/cyberark/conjur-api-go v0.13.8
