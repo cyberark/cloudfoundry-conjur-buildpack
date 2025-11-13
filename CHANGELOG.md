@@ -6,11 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [2.4.4] - 2025-10-27
+## [2.4.4] - 2025-11-13
 
 ### Changed
 - Updated Docker base images to use go-alpine variants for smaller image sizes.
-- Updated conjur-env dependencies to latest versions
+- Updated conjur-env dependencies to latest versions.
+- Updated Go to 1.25.
+- Updated Go dependencies.
+
+### Added
+- Added `close-stale.yml` GitHub workflow
 
 ## [2.4.3] - 2025-09-29
 
@@ -250,7 +255,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.3...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.4...HEAD
+[2.4.4]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.3...v2.4.4
 [2.4.3]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.2...v2.4.3
 [2.4.2]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.4.0...v2.4.1
