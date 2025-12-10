@@ -151,7 +151,11 @@ pipeline {
                 script {
                   infrapool.agentSh './ci/test_conjur-env'
                   infrapool.agentGet(
-                    from: 'conjur-env/output/*',
+                    from: 'conjur-env/output/*.xml',
+                    to: 'conjur-env/output/'
+                  )
+                  infrapool.agentGet(
+                    from: 'conjur-env/output/c.out',
                     to: 'conjur-env/output/'
                   )
                 }
@@ -160,6 +164,7 @@ pipeline {
               post {
                 always {
                   junit 'conjur-env/output/*.xml'
+                  cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'conjur-env/output/coverage.xml', conditionalCoverageTargets: '30, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '30, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '30, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
 
                   // Don't fail builds if we can't upload coverage information to Codacy
                   catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
