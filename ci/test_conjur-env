@@ -15,6 +15,9 @@ docker run \
 
   # Run unit test with coverage
   go install github.com/jstemmer/go-junit-report@latest
+  go install github.com/afunix/gocov/gocov@latest
+  go install github.com/AlekSi/gocov-xml@latest
   mkdir -p output
   go test -coverprofile=output/c.out -v . | tee /dev/stderr | go-junit-report > output/junit.xml
+  gocov convert output/c.out | gocov-xml > output/coverage.xml
   '''
