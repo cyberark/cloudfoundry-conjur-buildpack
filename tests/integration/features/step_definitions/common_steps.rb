@@ -39,6 +39,13 @@ And(/^The SECRETS_YAML_ENVIRONMENT value is '([^"]*)'$/) do |val|
   ENV
 end
 
+And(/^the SECRETS_YAML_PATH environment variable is set to '([^"]*)'$/) do |val|
+  @commands ||= []
+  @commands << <<~ENV
+    export SECRETS_YAML_PATH='#{val}'
+  ENV
+end
+
 Then(/^the result should have a non\-zero exit status$/) do
   expect(@result.exitstatus).not_to eq(0)
 end

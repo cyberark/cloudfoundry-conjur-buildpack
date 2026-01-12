@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.5] - 2026-01-09
+
+### Changed
+- Fixed supply script to correctly detect and report secrets.yml files outside the app root. (CNJR-10762)
+
 ## [2.4.4] - 2025-11-13
 
 ### Changed

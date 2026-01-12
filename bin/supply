@@ -33,13 +33,22 @@ if  [ -f "${BUILD_DIR}/BOOT-INF/classes/secrets.yml" ]; then
 fi
 
 # Search for candidate `secrets.yml` paths and report them to the deploy output
-secrets_yaml=$(find "${BUILD_DIR}" -name 'secrets.yml' -printf \"%P\\n\")
-if [ -z "${secrets_yaml}" ]; then
-  echo " - Unable to find a secrets.yml...exiting"
+if [ -n "${SECRETS_YAML_PATH}" ]; then
+  secrets_yaml_path="${BUILD_DIR}/${SECRETS_YAML_PATH}"
+else
+  secrets_yaml_path="${BUILD_DIR}/secrets.yml"
+fi
+
+if [ ! -f "${secrets_yaml_path}" ]; then
+  echo " - Unable to find secrets.yml at expected path: ${secrets_yaml_path}"
+  echo " - If you have secrets.yml in a different location, set SECRETS_YAML_PATH environment variable"
+
+  # Search for candidate `secrets.yml` paths to help with troubleshooting
+  echo " - Found secrets.yml files at the following locations:"
+  find "${BUILD_DIR}" -name 'secrets.yml' -printf "   %P\n" || echo "   (none found)"
   exit 1
 else
-  echo " - secrets.yml file found at:"
-  echo "${secrets_yaml}"
+  echo " - secrets.yml file found at: ${secrets_yaml_path}"
 fi
 
 # When used in CI pipelines, we want to be able to test the buildpack

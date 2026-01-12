@@ -18,6 +18,8 @@ Feature: Supply script
   @BUILD_DIR
   Scenario: When the app has a secrets.yml file not in the root
     Given the build directory has a secrets.yml file at 'lib/secrets.yml'
+    And the SECRETS_YAML_PATH environment variable is set to 'lib/secrets.yml'
+    And VCAP_SERVICES contains cyberark-conjur credentials
     When the supply script is run against the app's root folder
     Then the result should have a 0 exit status
 
