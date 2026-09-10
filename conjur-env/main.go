@@ -11,7 +11,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/cyberark/conjur-api-go/conjurapi"
 	"github.com/cyberark/summon/pkg/secretsyml"
 )
 
@@ -49,6 +48,12 @@ type ConjurCredentials struct {
 	Account        string `json:"account"`
 	SSLCertificate string `json:"ssl_certificate"`
 	Version        int    `json:"version"`
+
+	// Certificate authentication fields (authn_type: "cert")
+	AuthnType  string `json:"authn_type,omitempty"`
+	ServiceID  string `json:"authn_service_id,omitempty"`
+	ClientCert string `json:"authn_cert,omitempty"`
+	ClientKey  string `json:"authn_cert_key,omitempty"`
 }
 
 func (ci ConjurInfo) setEnv() {
@@ -62,6 +67,18 @@ func (c ConjurCredentials) setEnv() {
 	os.Setenv("CONJUR_ACCOUNT", c.Account)
 	os.Setenv("CONJUR_SSL_CERTIFICATE", c.SSLCertificate)
 	os.Setenv("CONJUR_VERSION", strconv.Itoa(c.Version))
+	if c.AuthnType != "" {
+		os.Setenv("CONJUR_BUILDPACK_AUTHN_TYPE", c.AuthnType)
+	}
+	if c.ServiceID != "" {
+		os.Setenv("CONJUR_AUTHN_SERVICE_ID", c.ServiceID)
+	}
+	if c.ClientCert != "" {
+		os.Setenv("CONJUR_AUTHN_CERT", c.ClientCert)
+	}
+	if c.ClientKey != "" {
+		os.Setenv("CONJUR_AUTHN_CERT_KEY", c.ClientKey)
+	}
 }
 
 func unsetEnv() {
@@ -71,6 +88,10 @@ func unsetEnv() {
 	os.Unsetenv("CONJUR_ACCOUNT")
 	os.Unsetenv("CONJUR_SSL_CERTIFICATE")
 	os.Unsetenv("CONJUR_VERSION")
+	os.Unsetenv("CONJUR_BUILDPACK_AUTHN_TYPE")
+	os.Unsetenv("CONJUR_AUTHN_SERVICE_ID")
+	os.Unsetenv("CONJUR_AUTHN_CERT")
+	os.Unsetenv("CONJUR_AUTHN_CERT_KEY")
 }
 
 func setConjurCredentialsEnv() error {
@@ -98,25 +119,6 @@ func setConjurCredentialsEnv() error {
 // secrets
 type newProvider func() (Provider, error)
 
-// NewAPIProvider returns a Conjur API client based on Conjur credentials
-// environment variable settings
-func NewAPIProvider() (Provider, error) {
-	err := setConjurCredentialsEnv()
-	if err != nil {
-		return nil, err
-	}
-
-	// Unset the environment variables after the client is created
-	defer unsetEnv()
-
-	config, err := conjurapi.LoadConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	return conjurapi.NewClientFromEnvironment(config)
-}
-
 func main() {
 	// Get the path of the secrets YAML file.
 	secretsYamlPath, exists := os.LookupEnv("SECRETS_YAML_PATH")
@@ -142,7 +144,7 @@ func main() {
 	tempFactory := newTempFactory()
 
 	// Retrieve secrets and generate a concatenation of export statements.
-	settings, err := retrieveSecrets(secrets, NewAPIProvider, &tempFactory)
+	settings, err := retrieveSecrets(secrets, NewAutoProvider, &tempFactory)
 	printAndExitIfError(err)
 
 	// Return the export strings in stdout

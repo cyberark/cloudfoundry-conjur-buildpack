@@ -55,6 +55,69 @@ and [Summon](https://github.com/cyberark/summon) to authenticate with Secrets Ma
 retrieve secrets using the application identity provided by the Secrets Manager Service
 Broker.
 
+## Authentication Methods
+
+The buildpack selects the authentication method automatically based on the
+`authn_type` credential field supplied by the bound Conjur service instance in
+`VCAP_SERVICES`.
+
+### API Key Authentication (default)
+
+When `authn_type` is absent or set to any value other than `cert`, the buildpack
+authenticates with an API key. The following credential fields are required:
+
+| Field | Description |
+|---|---|
+| `appliance_url` | Conjur server URL |
+| `account` | Conjur account name |
+| `authn_login` | Login / role ID (e.g. `host/my-app`) |
+| `authn_api_key` | API key for the role |
+| `ssl_certificate` | _(optional)_ CA certificate bundle (PEM) for TLS verification |
+
+### Certificate Authentication (`authn-cert`)
+
+When `authn_type` is set to `cert`, the buildpack performs mutual TLS
+authentication against the `authn-cert` authenticator endpoint. The following
+credential fields are required:
+
+| Field | Description |
+|---|---|
+| `appliance_url` | Conjur server URL |
+| `account` | Conjur account name |
+| `authn_service_id` | Authenticator service ID (e.g. `prod`) |
+| `authn_cert` | Client certificate (PEM) |
+| `authn_cert_key` | Client private key (PEM) |
+| `ssl_certificate` | _(optional)_ CA certificate bundle (PEM) for TLS verification |
+| `authn_login` | _(optional)_ Workload ID; omit for SPIFFE-mode where identity is derived from the certificate's SPIFFE URI SAN |
+
+**Request mode** (explicit `authn_login`):
+The buildpack constructs the authentication URL as
+`<appliance_url>/authn-cert/<service_id>/<account>/<url-encoded-login>/authenticate`.
+
+**SPIFFE mode** (no `authn_login`):
+The buildpack constructs the URL as
+`<appliance_url>/authn-cert/<service_id>/<account>/authenticate` and lets the
+Conjur server derive the workload identity from the certificate's SPIFFE ID.
+
+Example `VCAP_SERVICES` credential block for certificate authentication:
+
+```json
+{
+  "cyberark-conjur": [{
+    "credentials": {
+      "appliance_url": "https://conjur.example.com",
+      "account": "myorg",
+      "authn_type": "cert",
+      "authn_service_id": "prod",
+      "authn_login": "host/cf/my-app",
+      "authn_cert": "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
+      "authn_cert_key": "-----BEGIN EC PRIVATE KEY-----\n...\n-----END EC PRIVATE KEY-----",
+      "ssl_certificate": "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"
+    }
+  }]
+}
+```
+
 ## Getting Started
 
 The Secrets Manager Buildpack can be included in a CloudFoundry application as an online
