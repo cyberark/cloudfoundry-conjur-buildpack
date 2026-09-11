@@ -1,4 +1,4 @@
-FROM golang:1.25-alpine
+FROM golang:1.26-alpine
 LABEL maintainer="CyberArk Software, Inc."
 
 ARG SKIP_GOMOD_DOWNLOAD=false

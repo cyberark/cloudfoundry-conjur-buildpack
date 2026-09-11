@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.6] - 2026-09-10
+### Added
+- Certificate-based authentication (`authn-cert`) support via mTLS. When the
+  service credential in `VCAP_SERVICES` sets `authn_type` to `cert`, the buildpack
+  authenticates using the provided client certificate and private key instead of
+  an API key.
+- Telemetry support: the `conjur-env` binary now reports its integration identity
+  via the `x-cybr-telemetry` HTTP header on every outbound Conjur API call
+  (integration name `CloudFoundry Conjur Buildpack`, type `cybr-secretsmanager`,
+  vendor `CyberArk`, and the buildpack version injected at build time).
+
+### Changed
+- Updated Go to 1.26.0 across `go.mod`, the build Dockerfile, and the GitHub
+  Actions CI workflow.
+
 ## [2.4.5] - 2026-01-09
 
 ### Changed

@@ -6,10 +6,14 @@ services:
       - GOOS=linux
       - GOARCH=amd64
       - CGO_ENABLED=0
+      - BUILDPACK_VERSION=${BUILDPACK_VERSION:-dev}
     volumes:
       - .:/conjur-env
       - ../vendor:/pkg
-    command: go build -o /pkg/conjur-env -a -ldflags '-extldflags "-static"' .
+    command: >-
+      sh -c 'go build -o /pkg/conjur-env -a
+      -ldflags "-extldflags \"-static\" -X main.Version=${BUILDPACK_VERSION:-dev}"
+      .'
   conjur-win-env-builder:
     build:
       context: .
@@ -17,7 +21,11 @@ services:
       - GOOS=windows
       - GOARCH=amd64
       - CGO_ENABLED=0
+      - BUILDPACK_VERSION=${BUILDPACK_VERSION:-dev}
     volumes:
       - .:/conjur-env
       - ../vendor:/pkg
-    command: go build -o /pkg/conjur-win-env.exe -a -ldflags '-extldflags "-static"' .
+    command: >-
+      sh -c 'go build -o /pkg/conjur-win-env.exe -a
+      -ldflags "-extldflags \"-static\" -X main.Version=${BUILDPACK_VERSION:-dev}"
+      .'
