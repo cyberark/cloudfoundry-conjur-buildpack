@@ -5,12 +5,12 @@
 
 set -euo pipefail
 
-GO_VERSION="1.23.6"
-
 if [ "${CF_STACK}" == "cflinuxfs3" ]; then
-    GO_SHA256="1adb9077615a619d6c94996b6f60de136cca44a48bfc1c4697bb85e439e5e49b"
+    GO_VERSION="1.25.2"
+    GO_SHA256="385184a62bdcb565860663d365e2b28cdfbb6919d4439dae7e5cc87694a3dca6"
 elif [ "${CF_STACK}" == "cflinuxfs4" ]; then
-    GO_SHA256="aaaea153f5e90aafe2f7fbf27abe9e12c6d335c0b6cfd5c945a9938fa5857fa5"
+    GO_VERSION="1.25.12"
+    GO_SHA256="72adea67aa47ec63a07a301b958a60ea3ac7ca7ec80a39fd4533a4c26a4cbb90"
 else
   echo "       **ERROR** Unsupported stack"
   echo "                 See https://docs.cloudfoundry.org/devguide/deploy-apps/stacks.html for more info"

@@ -164,17 +164,12 @@ pipeline {
               post {
                 always {
                   junit 'conjur-env/output/*.xml'
-                    publishCoverage adapters: [
-                    coberturaAdapter(
-                      path: 'conjur-env/output/coverage.xml',
-                      thresholds: [
-                        [thresholdTarget: 'Line',        unhealthyThreshold: 30.0],
-                        [thresholdTarget: 'Conditional', unhealthyThreshold: 30.0],
-                        [thresholdTarget: 'Method',      unhealthyThreshold: 30.0]
-                      ]
-                    )
-                  ],
-                  sourceFileResolver: sourceFiles('NEVER_STORE')
+                  recordCoverage(
+                    tools: [[parser: 'COBERTURA', pattern: 'conjur-env/output/coverage.xml']],
+                    id: 'conjur-env-coverage',
+                    name: 'Conjur-Env Coverage',
+                    sourceCodeRetention: 'NEVER'
+                  )
 
                   // Don't fail builds if we can't upload coverage information to Codacy
                   catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
