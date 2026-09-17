@@ -6,16 +6,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-### Changed
-- Pinned Go base images to `1.25.13-alpine` and bumped the CF buildpack Go
-  dependency (`lib/install_go.sh`, `manifest.yml`) to remediate stdlib CVEs. (CP-25469)
-- Bumped the `go.mod` toolchain directive and Go base images to `1.26.7` after
-  the Go team dropped support for the 1.25.x branch. (CP-25469)
-- Replaced the deprecated Jenkins Cobertura Plugin step with `recordCoverage`
-  from the Coverage Plugin; Cobertura is EOL and its compiled code referenced
-  `hudson.util.IOException2`, which was removed from Jenkins core, breaking
-  the "Conjur-Env Unit Tests" stage. (CP-25469)
-
 ## [2.4.6] - 2026-09-10
 ### Added
 - Certificate-based authentication (`authn-cert`) support via mTLS. When the
@@ -30,6 +20,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Updated Go to 1.26.0 across `go.mod`, the build Dockerfile, and the GitHub
   Actions CI workflow.
+- Pinned Go base images to `1.25.13-alpine` and bumped the CF buildpack Go
+  dependency (`lib/install_go.sh`, `manifest.yml`) to remediate stdlib CVEs. (CP-25469)
+- Bumped the `go.mod` toolchain directive and Go base images to `1.26.7` after
+  the Go team dropped support for the 1.25.x branch. (CP-25469)
+- Replaced the deprecated Jenkins Cobertura Plugin step with `recordCoverage`
+  from the Coverage Plugin; Cobertura is EOL and its compiled code referenced
+  `hudson.util.IOException2`, which was removed from Jenkins core, breaking
+  the "Conjur-Env Unit Tests" stage. (CP-25469)
 
 ## [2.4.5] - 2026-01-09
 
