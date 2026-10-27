@@ -3,8 +3,8 @@ module github.com/cyberark/cloudfoundry-conjur-buildpack/conjur-env
 go 1.26.7
 
 require (
-	github.com/cyberark/conjur-api-go v0.13.9
-	github.com/cyberark/summon v0.10.7
+	github.com/cyberark/conjur-api-go v0.15.5
+	github.com/cyberark/summon v0.13.1
 	github.com/stretchr/testify v1.11.1
 )
 
@@ -33,7 +33,7 @@ require (
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/zalando/go-keyring v0.2.6 // indirect
+	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/sys v0.37.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
