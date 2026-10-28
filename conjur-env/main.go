@@ -155,11 +155,14 @@ func main() {
 // and returns an error if either the file doesn't exist or it contains
 // invalid secrets YAML syntax.
 func parseSecretsYamlFile(secretsYamlPath string, env string) (secretsyml.SecretsMap, error) {
-	secrets, err := secretsyml.ParseFromFile(secretsYamlPath, env, nil)
+	parsedConfig, err := secretsyml.ParseFromFile(secretsYamlPath, env, nil)
 	if os.IsNotExist(err) {
 		err = fmt.Errorf("error: %s not found", secretsYamlPath)
 	}
-	return secrets, err
+	if err != nil {
+		return nil, err
+	}
+	return parsedConfig.EnvSecrets, nil
 }
 
 // validateEnvVarNames validates environment variable names that are
