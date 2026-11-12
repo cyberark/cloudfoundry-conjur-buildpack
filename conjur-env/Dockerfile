@@ -2,11 +2,13 @@ FROM golang:1.26.7-alpine
 LABEL maintainer="CyberArk Software, Inc."
 
 ARG SKIP_GOMOD_DOWNLOAD=false
+ARG GOPROXY=https://proxy.golang.org,direct
 
 WORKDIR /conjur-env
 
 COPY go.mod go.sum /conjur-env/
 
-RUN if [ "$SKIP_GOMOD_DOWNLOAD" != "true" ]; then \
+RUN --mount=type=secret,id=gonetrc if [ "$SKIP_GOMOD_DOWNLOAD" != "true" ]; then \
+        if [ -s /run/secrets/gonetrc ]; then export NETRC=/run/secrets/gonetrc; fi; \
         go mod download; \
     fi
