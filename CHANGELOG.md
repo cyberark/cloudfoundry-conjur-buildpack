@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Security
 - Updated Go to 1.26.10.
+- Updated conjur-api-go to v0.17.1.
+- Updated go-jose to v4.1.6.
+- Updated oapi-codegen/runtime to v1.9.0.
+- Updated golang.org/x/net to v0.62.0.
 
 ## [2.4.6] - 2026-09-10
 ### Added

@@ -27,7 +27,7 @@ SECTION 1: Apache License 2.0
 >>> github.com/aws/aws-sdk-go-v2/service/ssooidc-1.35.3
 >>> github.com/aws/aws-sdk-go-v2/service/sts-1.38.9
 >>> github.com/aws/smithy-go-1.23.1
->>> github.com/cyberark/conjur-api-go/conjurapi-0.15.5
+>>> github.com/cyberark/conjur-api-go/conjurapi-0.17.1
 
 SECTION 2: BSD 3-clause "New" or "Revised" License
 
@@ -2705,7 +2705,7 @@ Apache License 2.0 is applicable to the following component(s).
       of your accepting any such warranty or additional liability.
 
 
->>> github.com/cyberark/conjur-api-go/conjurapi-0.15.5
+>>> github.com/cyberark/conjur-api-go/conjurapi-0.17.1
 
 
                                  Apache License
