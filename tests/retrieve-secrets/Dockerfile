@@ -1,4 +1,4 @@
-FROM golang:1.26.7-alpine
+FROM golang:1.26.10-alpine
 LABEL maintainer="CyberArk Software, Inc."
 
 ENV GOOS=linux \

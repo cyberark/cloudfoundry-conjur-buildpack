@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Security
+- Updated Go to 1.26.10.
+
 ## [2.4.6] - 2026-09-10
 ### Added
 - Certificate-based authentication (`authn-cert`) support via mTLS. When the
