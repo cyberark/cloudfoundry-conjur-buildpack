@@ -2,14 +2,22 @@ services:
   conjur-env-builder:
     build: 
       context: .
+      args:
+        - GOPROXY=${GOPROXY:-https://proxy.golang.org,direct}
+      secrets:
+        - gonetrc
     environment:
       - GOOS=linux
       - GOARCH=amd64
       - CGO_ENABLED=0
       - BUILDPACK_VERSION=${BUILDPACK_VERSION:-dev}
+      - GOPROXY=${GOPROXY:-https://proxy.golang.org,direct}
+      - NETRC=/run/secrets/gonetrc
     volumes:
       - .:/conjur-env
       - ../vendor:/pkg
+    secrets:
+      - gonetrc
     command: >-
       sh -c 'go build -o /pkg/conjur-env -a
       -ldflags "-extldflags \"-static\" -X main.Version=${BUILDPACK_VERSION:-dev}"
@@ -17,15 +25,27 @@ services:
   conjur-win-env-builder:
     build:
       context: .
+      args:
+        - GOPROXY=${GOPROXY:-https://proxy.golang.org,direct}
+      secrets:
+        - gonetrc
     environment:
       - GOOS=windows
       - GOARCH=amd64
       - CGO_ENABLED=0
       - BUILDPACK_VERSION=${BUILDPACK_VERSION:-dev}
+      - GOPROXY=${GOPROXY:-https://proxy.golang.org,direct}
+      - NETRC=/run/secrets/gonetrc
     volumes:
       - .:/conjur-env
       - ../vendor:/pkg
+    secrets:
+      - gonetrc
     command: >-
       sh -c 'go build -o /pkg/conjur-win-env.exe -a
       -ldflags "-extldflags \"-static\" -X main.Version=${BUILDPACK_VERSION:-dev}"
       .'
+
+secrets:
+  gonetrc:
+    file: ${GO_NETRC_FILE:-/dev/null}

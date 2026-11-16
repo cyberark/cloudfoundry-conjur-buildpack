@@ -21,6 +21,7 @@ done
 cd "$(dirname $0)"
 
 . ./utils.sh
+. ./ci/go_proxy.sh
 
 VERSION="$(project_semantic_version)"
 
@@ -32,7 +33,7 @@ export SKIP_GOMOD_DOWNLOAD
 ./conjur-env/build.sh
 
 echo "Building the image for buildpack-packager..."
-docker build -t packager -f Dockerfile.packager .
+go_proxy_docker_build -t packager -f Dockerfile.packager .
 
 echo "Packaging the conjur-buildpack as a zip file..."
 docker run --rm \

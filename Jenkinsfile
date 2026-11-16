@@ -76,6 +76,14 @@ pipeline {
       }
     }
 
+    stage('Configure Artifactory') {
+      steps {
+        script {
+          goProxy.setup(infrapool)
+        }
+      }
+    }
+
     stage('Get latest upstream dependencies') {
       steps {
         script {
@@ -216,6 +224,9 @@ pipeline {
   }
   post {
     always {
+      script {
+        goProxy.cleanup(infrapool)
+      }
       releaseInfraPoolAgent()
     }
   }

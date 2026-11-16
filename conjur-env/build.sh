@@ -11,6 +11,6 @@ export BUILDPACK_VERSION="${BUILDPACK_VERSION:-dev}"
 echo "Building conjur-env version: ${BUILDPACK_VERSION}"
 
 # Build the conjur-env binary for Linux and Windows
-docker compose build --build-arg SKIP_GOMOD_DOWNLOAD="$SKIP_GOMOD_DOWNLOAD"
+BUILDX_BAKE_ENTITLEMENTS_FS=0 docker compose build --build-arg SKIP_GOMOD_DOWNLOAD="$SKIP_GOMOD_DOWNLOAD"
 docker compose run --rm conjur-env-builder
 docker compose run --rm conjur-win-env-builder
