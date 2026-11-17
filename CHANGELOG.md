@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.7] - 2026-11-17
 ### Security
 - Updated Go to 1.26.10.
 - Updated conjur-api-go to v0.17.1.
